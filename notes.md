@@ -1,1 +1,4 @@
 Hey folks, here is what I learned how to do in class. I learned how to make a github repository, and stick it on my computer. Yup. I also got to learn how to open it all up in vscode, which is kinda cool. It seems like GIthub is just a google drive for my code, which is pretty neat. I'm eating an orange right now, not sure what else to put here, all my notes are in obsidian. If you aren't using obsidian, check it out, coolest note taking software out there. 2 best parts, free, and community plugins.
+
+# HTML Startup
+___
