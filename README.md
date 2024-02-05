@@ -16,3 +16,32 @@ The general layout of Goaly will be very minimalist, only displaying what is imp
 - **Database persistence** - Storing user data in a database. This is needed so that user goals last more than one login session, and are semi permanent. This will also allow other users to access the goals because they won't be stored locally on individual user's device.
 - **WebSocket** - Support for pushing data from the server. This will be in charge of the social aspect. It is what will allow the user to look up other people, and request access to their goals, and eventually pull their goals.
 - **Web framework** - Using React to add components and request routing. Not sure what this does yet, but looks like I am going to use it
+
+# HTML Startup
+___
+## HTML pages for each component of your application
+- I have a page for login, the main goal page, and a popup page for adding friends
+
+## Proper use of HTML tags including BODY, NAV, MAIN, HEADER, FOOTER
+- Yup, did this.
+
+## Links between pages as necessary
+ - My login page automatically links to the main page upon clicking submit, and you can navigate between my pages using the navigation bar and buttons throughout the app.
+
+## Application textual content
+Well, I did my best to write everything out.
+
+## Placeholder for 3rd party service calls
+There will be an inspirational quote that changes everyday at the bottom of the goals page, this will be pulled from 3rd party.
+
+## Application images
+My app is a pretty simplistic design, no images that I know of yet, so I added a few simple ones for fun, a + image that I turned into a button as well as I added an icon to my pages.
+
+## Login placeholder, including user name display
+I have a login page, and the usuername will be displayed on the user's goal card.
+
+## Database data placeholder showing content stored in the database
+The goals that are on each goal card will be stored in the database.
+
+## bWebSocket data placeholder showing where realtime communication will go
+The goals on your friend's goal cards will update live, so the moment your friend completes a goal or adds a new one, you will be able to see it.
