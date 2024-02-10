@@ -1,44 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="icon" href="duck-icon.ico">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Login form html</title>
     <link rel="stylesheet" href="styles.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
-<body class="flexItem">
-    <!--
-    <header>
-        <H1>Goaly</H1>
-        <nav>
-            <menu>
-                <li><a href="index.html">Login</a></li>
-                <li><a href="goals.html">Goals</a></li>
-            </menu>
-        </nav>
-        <hr />
-    </header>
-    -->
-        
-        <div>
-            <!--<img src="welcome_bird.png" width="600px" alt="Happy Flamingo">-->
-            <p>Login to play</p>
-            <form method="get" action="goals.html">
-                <label for="userName">User Name:</label>
-                <input type="text" id="userName" name="userName" placeholder="User Name" />
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" placeholder="Password" />
-                <button type="submit">Login</button>
-            </form>
-        </div>
-        
-        
-    </main>
-    <footer>
-        <hr />
-        <a href="https://github.com/cmarkstaller/start-up">GitHub</a>
-        <p>By Christopher Markstaller</p>
-    </footer>
+<body>
+    <div class="wrapper">
+        <form action="">
+            <h1>Login</h1>
+            <div class="input-box">
+                <input type="text" placeholder="Username" required>
+                <i class='bx bxs-user'></i>
+            </div>
+            
+            <div class="input-box">
+                <input type="password" placeholder="Password" required>
+                <i class='bx bxs-lock-alt'></i>
+            </div>
+
+            <div class="remember-forgot">
+                <label><input type="checkbox"> Remember me</label>
+                <a href="#">Forgot password?</a>
+            </div>
+
+            <button type="submit" class="btn">Login</button>
+
+            <div class="register-link">
+                <p>Don't have an account? <a href="#">Register</a></p>
+            </div>
+            
+        </form>
+    </div>
+    
 </body>
 </html>

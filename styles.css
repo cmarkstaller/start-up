@@ -1,3 +1,14 @@
+body {
+    margin: 0px;
+    height: 100vh;
+}
+main {
+    height: 70vh;
+    align-items: center;
+    margin: 0px;
+}
+footer {
+}
 .flexItem {
     display: flex;
     justify-content: center;
