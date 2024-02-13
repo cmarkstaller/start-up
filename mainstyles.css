@@ -8,7 +8,9 @@
 }
 
 body {
-    background-color: white;
+    background: url('whitemountains.jpg') fixed;
+    background-size: cover;
+    background-position: center;
 }
 .container {
     margin: 30px;
@@ -19,7 +21,8 @@ body {
 }
 
 .card {
-    background-color: rgb(225, 225, 225);
+    /* background-color: rgb(225, 225, 225); */
+    background: transparent;
     font-size: 25x;
     font-weight: 600;
     border-radius: 10px;
@@ -90,6 +93,3 @@ body {
 .goals input:checked + span {
     background-color: black; /* Change the background color when checked */
   }
-
-
-
