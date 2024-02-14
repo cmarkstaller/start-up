@@ -59,13 +59,13 @@ index.html and main.html are my two main html files
 You can go back and forth between the login page and the main page, everything else will be done in the main page using java script, I have buttons that are ready to add this functionality for add goal and add friend. I made an awesome hamburger menu that I could add more elements too should I find the need such as a settings page.
 
 ## Responsive to window resizing
-Looks good
+Looks good on everything.
 
 ## Application elements
-
+my epic cards have transparency and blur for an asthetically pleasing experience, drawing you into the mountain range. The hamburger menu has a sick transition, and is intuitive to use. I made cool looking check circles too.
 
 ## Application text content
-I have text that represents just about everything that I need to represent
+I have text that represents just about everything that I need to represent. changed font to a google one
 
 ## Application images
 Added a few epic background images
