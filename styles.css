@@ -9,6 +9,7 @@
 
 body {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
@@ -17,7 +18,26 @@ body {
     background-position: center;
 }
 
+footer {
+    position: relative;
+    top: 230px;
+    display: flex;
+    color: rgb(138, 138, 138);
+}
+
+footer a {
+    color: rgb(160, 160, 160);
+    text-decoration: none;
+    font-weight: 700;
+    margin-left: 5px;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
 .wrapper {
+    position: absolute;
     width: 420px;
     background: transparent;
     border: 2px solid rgba(255, 255, 255, .2);
