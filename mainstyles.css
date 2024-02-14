@@ -33,12 +33,12 @@ body {
     position: absolute;
     top: var(--hamburger-margin);
     left: var(--hamburger-margin);
-    z-index: 2;
+    z-index: 3;
     cursor: pointer;
 }
 
 .hamburger-menu:has(input:checked) {
-    --foreground: white;
+    /* --foreground: white; */
     --background: #333;
 }
 
@@ -87,15 +87,32 @@ body {
     transition: translate var(--animation-timing);
     translate: -100%;
     padding: .5rem 1rem;
-    padding-top: calc(var(--hamburger-height) + var(--hamburger-margin) + 1rem);
+    /* padding-top: calc(var(--hamburger-height) + var(--hamburger-margin) + 1rem); */
+    margin-top: 30px;
     background-color: var(--foreground);
     color: var(--background);
-    max-width: 10rem;
-    height: 120px;
+    max-width: 100px;
+    height: 40px;
+    z-index: 2;
+    position: relative;
+    border-radius: 10px;
+    top: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sidebar a {
+    color: white;
+    text-decoration: none;
+}
+
+.sidebar a:hover {
+    text-decoration: underline;
 }
 
 .container {
-    margin: 70px 30px 30px 30px;
+    margin: 10px 30px 30px 30px;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     grid-auto-rows: 200px;
@@ -154,30 +171,39 @@ body {
 
 .addfriend {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
+.addfriend p {
+    color: rgb(147, 147, 147);
+    position: relative;
+    top: 80px;
+}
+
 .card .btn {
     display: flex;
+    flex-direction: column;
     height: 150px;
     width: 150px;
     justify-content: center;
     align-items: center;
     border: none;
     background-color: transparent;
+    position: absolute;
 }
 
 .card .btn i {
     font-size: 150px;
     color: rgb(147, 147, 147);
+    cursor: pointer;
 }
 
 .btn:hover {
     i {
         color: rgb(125, 125, 125);
     }
-    
 }
 
 .card .goals label {
