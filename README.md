@@ -45,3 +45,27 @@ The goals that are on each goal card will be stored in the database.
 
 ## bWebSocket data placeholder showing where realtime communication will go
 The goals on your friend's goal cards will update live, so the moment your friend completes a goal or adds a new one, you will be able to see it.
+
+# CSS Startup
+**The style I am going for here is a phone application**
+
+## Name and link to Github
+Displayed underneath the login window in index.html
+
+## Header, footer, and main content body
+index.html and main.html are my two main html files
+
+## Navigation elements
+You can go back and forth between the login page and the main page, everything else will be done in the main page using java script, I have buttons that are ready to add this functionality for add goal and add friend. I made an awesome hamburger menu that I could add more elements too should I find the need such as a settings page.
+
+## Responsive to window resizing
+Looks good
+
+## Application elements
+
+
+## Application text content
+I have text that represents just about everything that I need to represent
+
+## Application images
+Added a few epic background images

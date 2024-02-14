@@ -139,6 +139,23 @@ body {
     background-color: rgba(93, 93, 93, 0.3);
 }
 
+.personal .btn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    background-color: transparent;
+    i {
+        font-size: 20px;
+        font-weight: 570;
+    }
+
+    i:hover {
+        color:rgb(101, 101, 101);
+    }
+}
+
 .card h1 {
     text-align: center;
     font-size: 30px;
@@ -182,7 +199,7 @@ body {
     top: 80px;
 }
 
-.card .btn {
+.addfriend .btn {
     display: flex;
     flex-direction: column;
     height: 150px;
@@ -194,13 +211,13 @@ body {
     position: absolute;
 }
 
-.card .btn i {
+.addfriend .btn i {
     font-size: 150px;
     color: rgb(147, 147, 147);
     cursor: pointer;
 }
 
-.btn:hover {
+.addfriend .btn:hover {
     i {
         color: rgb(125, 125, 125);
     }
@@ -212,7 +229,8 @@ body {
 }
 .card .goals label input {
     opacity: 0;
-    /* position: absolute; */
+    position: absolute;
+    background-color:orange;
 }
 
 .card .goals label span {
