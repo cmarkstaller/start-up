@@ -1,12 +1,16 @@
 function login() {
+    // Sets local storage username value to current username;
+    const nameEl = document.querySelector("#username").value;
+    localStorage.setItem("username", nameEl);
     
-    if (localStorage.getItem("dictionary") === null) {
-        localStorage.setItem('dictionary', JSON.stringify(new Map));
-    }
+    // if (localStorage.getItem("dictionary") === null) {
+    //     console.log("inside of my if statement");  
+    //     localStorage.setItem('dictionary', JSON.stringify(new Map));
+    // }
     
-    dictionary = JSON.parse(localStorage.getItem('dictionary'));
+    // dictionary = JSON.parse(localStorage.getItem('dictionary'));
     
-    const nameEl = document.querySelector("#username");
+    
     
     dictionary.set(nameEl, new Person(nameEl));
     
