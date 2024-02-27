@@ -1,8 +1,17 @@
 function login() {
     // Sets local storage username value to current username;
-    const nameEl = document.querySelector("#username").value;
-    localStorage.setItem("username", nameEl);
+    const usernameEl = document.querySelector("#username").value;
+    localStorage.setItem("username", usernameEl);
     
+    var dictionary = new Map()
+    dictionary.set(usernameEl, new Person(usernameEl));
+
+    var userObject = dictionary.get(usernameEl);
+
+    localStorage.setItem("dictionary", JSON.stringify(Array.from(dictionary.entries())));
+    
+    let storedMap = new Map(JSON.parse(localStorage.getItem('dictionary')));
+    console.log(storedMap);
     // if (localStorage.getItem("dictionary") === null) {
     //     console.log("inside of my if statement");  
     //     localStorage.setItem('dictionary', JSON.stringify(new Map));
@@ -12,14 +21,13 @@ function login() {
     
     
     
-    dictionary.set(nameEl, new Person(nameEl));
+    // dictionary.set(nameEl, new Person(nameEl));
     
-    localStorage.setItem("dictionary", dictionary);
-    localStorage.setItem("username", nameEl);
+    // localStorage.setItem("dictionary", dictionary);
+    // localStorage.setItem("username", nameEl);
     
-    console.log("I made it here");
 
-    window.location.href = "main.html";
+    // window.location.href = "main.html";
   }
 
 function populatePerson() {
@@ -65,6 +73,10 @@ class Person {
         this.userName = userName;
         this.goals = []
         this.friends = []
+    }
+
+    getname() {
+        return(this.userName);
     }
 
     addFriend(person) {
