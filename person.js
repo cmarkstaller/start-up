@@ -1,5 +1,6 @@
 function login() {
-    if (localStorage.getItem("dictionary") !== null) {
+    
+    if (localStorage.getItem("dictionary") === null) {
         localStorage.setItem('dictionary', JSON.stringify(new Map));
     }
     
@@ -7,8 +8,10 @@ function login() {
     
     const nameEl = document.querySelector("#username");
     
+    dictionary.set(nameEl, new Person(nameEl));
     
-    localStorage.setItem("username", nameEl.value);
+    localStorage.setItem("dictionary", dictionary);
+    
     window.location.href = "main.html";
   }
 
