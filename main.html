@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Main Goal Card Page</title>
+    <script src="person.js"></script>
     <link rel="stylesheet" href="mainstyles.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
@@ -18,7 +19,8 @@
     </aside>
 
     <div class="container">
-        <div class="card personal">
+        <script>populatePerson()</script>
+        <div class="card personal" id="personal card">
             <h1>Username</h1>
             <div class="goals">
                 <label>
@@ -31,11 +33,6 @@
                     <span></span>
                     <p>Goal 2</p>
                 </label>
-                <!-- <label>
-                    <input type="checkbox">
-                    <span></span>
-                    <p>Goal 3</p>
-                </label> -->
                 <label>
                     <button class="btn"><i class='bx bx-plus-circle'></i></button>
                 </label>
@@ -47,173 +44,28 @@
             <p class="person"> – Lou Holtz -</p>
         </div>
 
-        <div class="card">
-            <h1>Name</h1>
-            <div class="goals">
-                <label>
-                    <input type="checkbox">
-                    <span></span>
-                    <p>Goal 1</p>
-                </label>
-                <label>
-                    <input type="checkbox">
-                    <span></span>
-                    <p>Goal 2</p>
-                </label>
-                <label>
-                    <input type="checkbox">
-                    <span></span>
-                    <p>Goal 3</p>
-                </label>
+        <div class="friendCards">
+            <div class="card">
+                <h1>Name</h1>
+                <div class="goals">
+                    <label>
+                        <input type="checkbox">
+                        <span></span>
+                        <p>Goal 1</p>
+                    </label>
+                    <label>
+                        <input type="checkbox">
+                        <span></span>
+                        <p>Goal 2</p>
+                    </label>
+                    <label>
+                        <input type="checkbox">
+                        <span></span>
+                        <p>Goal 3</p>
+                    </label>
+                </div>
             </div>
-        </div>
-
-        <div class="card">
-            <h1>Name</h1>
-            <div class="goals">
-                <label>
-                    <input type="checkbox">
-                    <span></span>
-                    <p>Goal 1</p>
-                </label>
-                <label>
-                    <input type="checkbox">
-                    <span></span>
-                    <p>Goal 2</p>
-                </label>
-                <label>
-                    <input type="checkbox">
-                    <span></span>
-                    <p>Goal 3</p>
-                </label>
-            </div>
-        </div>
-
-        <div class="card">
-            <h1>Name</h1>
-            <div class="goals">
-                <label>
-                    <input type="checkbox">
-                    <span></span>
-                    <p>Goal 1</p>
-                </label>
-                <label>
-                    <input type="checkbox">
-                    <span></span>
-                    <p>Goal 2</p>
-                </label>
-                <label>
-                    <input type="checkbox">
-                    <span></span>
-                    <p>Goal 3</p>
-                </label>
-            </div>
-        </div>
-
-        <div class="card">
-            <h1>Name</h1>
-            <div class="goals">
-                <label>
-                    <input type="checkbox">
-                    <span></span>
-                    <p>Goal 1</p>
-                </label>
-                <label>
-                    <input type="checkbox">
-                    <span></span>
-                    <p>Goal 2</p>
-                </label>
-                <label>
-                    <input type="checkbox">
-                    <span></span>
-                    <p>Goal 3</p>
-                </label>
-            </div>
-        </div>
-
-        <div class="card">
-            <h1>Name</h1>
-            <div class="goals">
-                <label>
-                    <input type="checkbox">
-                    <span></span>
-                    <p>Goal 1</p>
-                </label>
-                <label>
-                    <input type="checkbox">
-                    <span></span>
-                    <p>Goal 2</p>
-                </label>
-                <label>
-                    <input type="checkbox">
-                    <span></span>
-                    <p>Goal 3</p>
-                </label>
-            </div>
-        </div>
-
-        <div class="card">
-            <h1>Name</h1>
-            <div class="goals">
-                <label>
-                    <input type="checkbox">
-                    <span></span>
-                    <p>Goal 1</p>
-                </label>
-                <label>
-                    <input type="checkbox">
-                    <span></span>
-                    <p>Goal 2</p>
-                </label>
-                <label>
-                    <input type="checkbox">
-                    <span></span>
-                    <p>Goal 3</p>
-                </label>
-            </div>
-        </div>
-
-        <div class="card">
-            <h1>Name</h1>
-            <div class="goals">
-                <label>
-                    <input type="checkbox">
-                    <span></span>
-                    <p>Goal 1</p>
-                </label>
-                <label>
-                    <input type="checkbox">
-                    <span></span>
-                    <p>Goal 2</p>
-                </label>
-                <label>
-                    <input type="checkbox">
-                    <span></span>
-                    <p>Goal 3</p>
-                </label>
-            </div>
-        </div>
-
-        <div class="card">
-            <h1>Name</h1>
-            <div class="goals">
-                <label>
-                    <input type="checkbox">
-                    <span></span>
-                    <p>Goal 1</p>
-                </label>
-                <label>
-                    <input type="checkbox">
-                    <span></span>
-                    <p>Goal 2</p>
-                </label>
-                <label>
-                    <input type="checkbox">
-                    <span></span>
-                    <p>Goal 3</p>
-                </label>
-            </div>
-        </div>
+        </div>    
 
         <div class="card addfriend">
             <button class="btn"><i class='bx bx-plus-circle'></i></button>
