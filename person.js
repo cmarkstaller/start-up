@@ -1,3 +1,17 @@
+function login() {
+    if (localStorage.getItem("dictionary") !== null) {
+        localStorage.setItem('dictionary', JSON.stringify(new Map));
+    }
+    
+    dictionary = JSON.parse(localStorage.getItem('dictionary'));
+    
+    const nameEl = document.querySelector("#username");
+    
+    
+    localStorage.setItem("username", nameEl.value);
+    window.location.href = "main.html";
+  }
+
 class Person {
     userName;
     goals;
