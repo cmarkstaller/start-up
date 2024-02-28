@@ -29,11 +29,11 @@ function populatePerson() {
     
     // let userObject = dictionary.get(localStorage.getItem("username"));
 
-    // const userTag = document.createElement('h1');
-    // userTag.textContent = localStorage.getItem("username");
+    var userTag = document.createElement('h1');
+    userTag.textContent = username;
 
-    // const cardEl = document.querySelector('#personal card');
-    // cardEl.appendChild(userTag);
+    var cardEl = document.getElementById('personal card');
+    cardEl.appendChild(userTag);
 
 
 
