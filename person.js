@@ -25,16 +25,50 @@ function login() {
 
 function populatePerson() {
     var username = localStorage.getItem("username");
-    console.log(username);
+    var dictionary = new Map(JSON.parse(localStorage.getItem('dictionary')));
+    var userObject = dictionary.get(username);
+
+    // Sets the username
+    // var userTag = document.createElement('h1');
+    // userTag.textContent = username;
+    // var cardEl = document.getElementById('personal card');
+    // cardEl.appendChild(userTag);
+
+    // Sets the username
+    var h1El = document.querySelector('.card.personal h1')
+    h1El.textContent = 'New Username';
+
+    var goalListEl = document.querySelector('.card.personal .gaols');
     
-    // let userObject = dictionary.get(localStorage.getItem("username"));
+    for (var goal of userObject.goals) {
+        var labelEl = document.createElement('label');
+        var checkboxEl = document.createElement('input');
+        checkboxEl.type = 'checkbox';
+        var spanEl = document.createElement('span');
+        var pEl = document.createElement('p');
+        pEl.textContent = goal;
 
-    var userTag = document.createElement('h1');
-    userTag.textContent = username;
+        labelEl.append(checkboxEl);
+        labelEl.append(spaneEl);
+        labelEl.append(pEl);
 
-    var cardEl = document.getElementById('personal card');
-    cardEl.appendChild(userTag);
+        goalListEl.append(labelEl);
+    }
+    
+    // var ulElement = document.createElement('ul');
 
+    // // Populate the list with data
+    // myListData.forEach(function(item) {
+    //   var liElement = document.createElement('li');
+    //   liElement.textContent = item;
+    //   ulElement.appendChild(liElement);
+    // });
+  
+    // Append the list to the container element
+    // var listContainer = document.getElementById('listContainer');
+    // listContainer.appendChild(ulElement);
+
+    
 
 
     // <div class="card personal" id="personal card">
