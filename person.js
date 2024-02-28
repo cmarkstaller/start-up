@@ -3,36 +3,29 @@ function login() {
     const usernameEl = document.querySelector("#username").value;
     localStorage.setItem("username", usernameEl);
     
-    var dictionary = new Map()
-    dictionary.set(usernameEl, new Person(usernameEl));
+    // If a dictionary doesn't already exist in local storage, make one
+    if (localStorage.getItem("dictionary") === null) {
+        console.log("inside of my if statement");  
+        localStorage.setItem("dictionary", JSON.stringify(Array.from(new Map())));
+    }
 
-    var userObject = dictionary.get(usernameEl);
-
+    // pull the dictionary from storage
+    var dictionary = new Map(JSON.parse(localStorage.getItem('dictionary')));
+    
+    // Add a user object to the dictionary if it isn't already in there
+    if (!dictionary.has(usernameEl)) {
+        dictionary.set(usernameEl, new Person(usernameEl));
+    }
+    
+    // Send the dictionary back up to storage.
     localStorage.setItem("dictionary", JSON.stringify(Array.from(dictionary.entries())));
     
-    let storedMap = new Map(JSON.parse(localStorage.getItem('dictionary')));
-    console.log(storedMap);
-    // if (localStorage.getItem("dictionary") === null) {
-    //     console.log("inside of my if statement");  
-    //     localStorage.setItem('dictionary', JSON.stringify(new Map));
-    // }
-    
-    // dictionary = JSON.parse(localStorage.getItem('dictionary'));
-    
-    
-    
-    // dictionary.set(nameEl, new Person(nameEl));
-    
-    // localStorage.setItem("dictionary", dictionary);
-    // localStorage.setItem("username", nameEl);
-    
-
-    // window.location.href = "main.html";
+    window.location.href = "main.html";
   }
 
 function populatePerson() {
-    dictionary = JSON.parse(localStorage.getItem('dictionary'));
-    console.log(localStorage.getItem("username"));
+    var username = localStorage.getItem("username");
+    console.log(username);
     
     // let userObject = dictionary.get(localStorage.getItem("username"));
 
