@@ -29,17 +29,14 @@ function populatePerson() {
     var userObject = dictionary.get(username);
 
     // Sets the username
-    // var userTag = document.createElement('h1');
-    // userTag.textContent = username;
-    // var cardEl = document.getElementById('personal card');
-    // cardEl.appendChild(userTag);
-
-    // Sets the username
     var h1El = document.querySelector('.card.personal h1')
-    h1El.textContent = 'New Username';
-
-    var goalListEl = document.querySelector('.card.personal .gaols');
+    h1El.textContent = username;
     
+    var testGoals = ["wash dishes", "cry"];
+    userObject.goals = userObject.goals.concat(testGoals);
+
+    var goalListEl = document.querySelector('.card.personal .goals');
+
     for (var goal of userObject.goals) {
         var labelEl = document.createElement('label');
         var checkboxEl = document.createElement('input');
@@ -48,47 +45,13 @@ function populatePerson() {
         var pEl = document.createElement('p');
         pEl.textContent = goal;
 
-        labelEl.append(checkboxEl);
-        labelEl.append(spaneEl);
-        labelEl.append(pEl);
+        labelEl.appendChild(checkboxEl);
+        labelEl.appendChild(spanEl);
+        labelEl.appendChild(pEl);
 
-        goalListEl.append(labelEl);
+        var addGoalEl = document.querySelector("#addGoalButton");
+        goalListEl.insertBefore(labelEl, addGoalEl);
     }
-    
-    // var ulElement = document.createElement('ul');
-
-    // // Populate the list with data
-    // myListData.forEach(function(item) {
-    //   var liElement = document.createElement('li');
-    //   liElement.textContent = item;
-    //   ulElement.appendChild(liElement);
-    // });
-  
-    // Append the list to the container element
-    // var listContainer = document.getElementById('listContainer');
-    // listContainer.appendChild(ulElement);
-
-    
-
-
-    // <div class="card personal" id="personal card">
-    //         <h1>Username</h1>
-    //         <div class="goals">
-    //             <label>
-    //                 <input type="checkbox">
-    //                 <span></span>
-    //                 <p>Goal 1</p>
-    //             </label>
-    //             <label>
-    //                 <input type="checkbox">
-    //                 <span></span>
-    //                 <p>Goal 2</p>
-    //             </label>
-    //             <label>
-    //                 <button class="btn"><i class='bx bx-plus-circle'></i></button>
-    //             </label>
-    //         </div>
-    //     </div>
 }  
 
 class Person {
