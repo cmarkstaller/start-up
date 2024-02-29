@@ -33,13 +33,44 @@ function populatePerson() {
     var h1El = document.querySelector('.card.personal h1')
     h1El.textContent = username;
 
+    renderGoals();
+    // var goalListEl = document.querySelector('.card.personal .goals');
+    // var parentElement = document.querySelector(".goalList");
+    // while (parentElement.firstChild) {
+    //     parentElement.removeChild(parentElement.firstChild);
+    // }
 
+    // for (var goal of userObject.goals) {
+    //     var labelEl = document.createElement('label');
+    //     var checkboxEl = document.createElement('input');
+    //     checkboxEl.type = 'checkbox';
+    //     checkboxEl.addEventListener('change', function(event) {
+    //         handleCheckboxChange(event, goal);
+    //     });
+    //     var spanEl = document.createElement('span');
+    //     var pEl = document.createElement('p');
+    //     pEl.textContent = goal;
+
+    //     labelEl.appendChild(checkboxEl);
+    //     labelEl.appendChild(spanEl);
+    //     labelEl.appendChild(pEl);
+
+    //     var addGoalEl = document.querySelector(".goalList");
+    //     addGoalEl.appendChild(labelEl);
+    // }
+}
+
+function renderGoals() {
+    var username = localStorage.getItem("username");
+    var dictionary = new Map(JSON.parse(localStorage.getItem('dictionary')));
+    var userObject = dictionary.get(username);
+    
     var goalListEl = document.querySelector('.card.personal .goals');
     var parentElement = document.querySelector(".goalList");
     while (parentElement.firstChild) {
         parentElement.removeChild(parentElement.firstChild);
     }
-
+    
     for (var goal of userObject.goals) {
         var labelEl = document.createElement('label');
         var checkboxEl = document.createElement('input');
