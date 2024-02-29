@@ -114,6 +114,81 @@ function resetAddFriendCard() {
     }
 }
 
+function displayFriendCards() {
+    var username = localStorage.getItem("username");
+    var dictionary = new Map(JSON.parse(localStorage.getItem('dictionary')));
+    var userObject = dictionary.get(username);
+
+    for (var user of userObject.friends) {
+        displayFriendCard(user);
+    }
+}
+
+function displayFriendCard(user) {
+    var username = localStorage.getItem("username");
+    var dictionary = new Map(JSON.parse(localStorage.getItem('dictionary')));
+    var userObject = dictionary.get(username);
+    
+    var containerEl = document.querySelector(".container");
+
+    var cardEl = document.createElement('div');
+    cardEl.classList.add("card");
+
+    var h1El = document.createElement('h1');
+    h1El.textContent = user;
+    cardEl.appendChild(h1El);
+
+    var goalsEl = document.createElement('div');
+    goalsEl.classList.add("goals");
+
+    for (var goal of dictionary.get(user).goals) {
+        var labelEl = document.createElement('label');
+        var checkboxEl = document.createElement('input');
+        checkboxEl.type = 'checkbox';
+        var spanEl = document.createElement('span');
+        var pEl = document.createElement('p');
+        pEl.textContent = goal;
+
+        labelEl.appendChild(checkboxEl);
+        labelEl.appendChild(spanEl);
+        labelEl.appendChild(pEl);
+
+        goalsEl.appendChild(labelEl);
+    }
+    
+    cardEl.appendChild(goalsEl);
+    containerEl.appendChild(cardEl);
+
+    
+
+
+
+
+    // <div class="friendCards">
+    //         <div class="card">
+    //             <h1>Name</h1>
+    //             <div class="goals">
+    //                 <label>
+    //                     <input type="checkbox">
+    //                     <span></span>
+    //                     <p>Goal 1</p>
+    //                 </label>
+    //                 <label>
+    //                     <input type="checkbox">
+    //                     <span></span>
+    //                     <p>Goal 2</p>
+    //                 </label>
+    //                 <label>
+    //                     <input type="checkbox">
+    //                     <span></span>
+    //                     <p>Goal 3</p>
+    //                 </label>
+    //             </div>
+    //         </div>
+    //     </div>
+
+}
+
 class Person {
     userName;
     goals;
