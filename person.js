@@ -70,6 +70,32 @@ function addGoal() {
     populatePerson();
 }
 
+function addFriend() {
+    console.log("I made it here");
+    var username = localStorage.getItem("username");
+    var dictionary = new Map(JSON.parse(localStorage.getItem('dictionary')));
+    var userObject = dictionary.get(username);
+
+    var selectEl = document.createElement('select');
+
+    dictionary.forEach(function(value, key) {
+        console.log(value.userName);
+        var person = document.createElement('option');
+        person.textContent = key;
+        selectEl.appendChild(person);
+    });
+
+    var addFriendCard = document.querySelector('#addFriendCard');
+    addFriendCard.appendChild(selectEl);
+
+
+    // <select id="select" name="varSelect">
+    //       <option>option1</option>
+    //       <option selected>option2</option>
+    //       <option>option3</option>
+    // </select>
+}
+
 class Person {
     userName;
     goals;
