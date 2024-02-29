@@ -69,3 +69,20 @@ I have text that represents just about everything that I need to represent. chan
 
 ## Application images
 Added a few epic background images
+___
+
+# JavaScript Startup
+## Have JavaScript that takes user input and adds it to the mocked database data.
+I have a map named dictionary that acts as my database. Anytime the user makes a new goal, deletes a goal, adds a friend, it is updated in the database
+
+## Have JavaScript that reads the login input and displays the user name.
+The username is stored in localStorage, and displayed on the users goal card.
+
+## Have JavaScript that mocks your database data and injects it into the DOM.
+Whenever I populate the user's goals or the friend goal cards, I pull it from the database.
+
+# Use the localstorage API to keep data between pages and browser sessions.
+Yup, still doing this using two variables, username and dictionary.
+
+## Have JavaScript that mocks out the realtime data you expect to get from the server using WebSocket and inject it into the DOM.
+Friends goals are updated as a friend updates their goals. To test this functionality, try adding a few users by logging in and logging out, giving each of those users a few goals. Websocket will call display friend Cards to accomplish this.
