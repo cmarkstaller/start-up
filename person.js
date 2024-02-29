@@ -71,29 +71,41 @@ function addGoal() {
 }
 
 function addFriend() {
-    console.log("I made it here");
     var username = localStorage.getItem("username");
     var dictionary = new Map(JSON.parse(localStorage.getItem('dictionary')));
     var userObject = dictionary.get(username);
 
     var selectEl = document.createElement('select');
+    selectEl.onchange = function() {
+        selectFriend(this.value);
+    };
 
     dictionary.forEach(function(value, key) {
-        console.log(value.userName);
         var person = document.createElement('option');
+        person.value = key;
         person.textContent = key;
         selectEl.appendChild(person);
     });
 
     var addFriendCard = document.querySelector('#addFriendCard');
     addFriendCard.appendChild(selectEl);
+}
 
+function selectFriend(user) {
+    var username = localStorage.getItem("username");
+    var dictionary = new Map(JSON.parse(localStorage.getItem('dictionary')));
+    var userObject = dictionary.get(username);
 
-    // <select id="select" name="varSelect">
-    //       <option>option1</option>
-    //       <option selected>option2</option>
-    //       <option>option3</option>
-    // </select>
+    if (!userObject.friends.includes(user) && user !== username) {
+        userObject.friends.push(user);
+        dictionary.set(username, userObject);
+        localStorage.setItem("dictionary", JSON.stringify(Array.from(dictionary.entries())));
+        console.log("I made it in here");
+    }
+}
+
+function resetAddFriendCard() {
+    document.querySelector("#addFriendCard");
 }
 
 class Person {
