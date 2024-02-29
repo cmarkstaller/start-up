@@ -32,11 +32,13 @@ function populatePerson() {
     // Sets the username
     var h1El = document.querySelector('.card.personal h1')
     h1El.textContent = username;
-    
-    // var testGoals = ["wash dishes", "cry"];
-    // userObject.goals = userObject.goals.concat(testGoals);
+
 
     var goalListEl = document.querySelector('.card.personal .goals');
+    var parentElement = document.querySelector(".goalList");
+    while (parentElement.firstChild) {
+        parentElement.removeChild(parentElement.firstChild);
+    }
 
     for (var goal of userObject.goals) {
         var labelEl = document.createElement('label');
