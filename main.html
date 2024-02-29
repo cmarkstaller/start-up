@@ -21,10 +21,18 @@
     <div class="container">
         <div class="card personal">
             <h1>Username</h1>
-            <div class="goals">
-                <label id="addGoalButton">
-                    <button class="btn"><i class='bx bx-plus-circle'></i></button>
-                </label>
+            <div class="goals">  
+                <div class="goalList">
+                </div>
+                <div class="addGoal"> 
+                    <div id="addGoalInput">
+                        <input type="text" id="goalInput" placeholder="Add Goal">
+                    </div>
+                    
+                    <label id="addGoalButton">
+                        <button class="btn" onclick="addGoal()"><i class='bx bx-plus-circle'></i></button>
+                    </label>
+                </div>    
             </div>
             <script>populatePerson()</script>
         </div>

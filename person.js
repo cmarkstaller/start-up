@@ -1,11 +1,12 @@
-function login() {
+function login(event) {
+    event.preventDefault();
+    
     // Sets local storage username value to current username;
     const usernameEl = document.querySelector("#username").value;
     localStorage.setItem("username", usernameEl);
     
     // If a dictionary doesn't already exist in local storage, make one
-    if (localStorage.getItem("dictionary") === null) {
-        console.log("inside of my if statement");  
+    if (localStorage.getItem("dictionary") === null) { 
         localStorage.setItem("dictionary", JSON.stringify(Array.from(new Map())));
     }
 
@@ -19,7 +20,7 @@ function login() {
     
     // Send the dictionary back up to storage.
     localStorage.setItem("dictionary", JSON.stringify(Array.from(dictionary.entries())));
-    
+
     window.location.href = "main.html";
   }
 
@@ -32,8 +33,8 @@ function populatePerson() {
     var h1El = document.querySelector('.card.personal h1')
     h1El.textContent = username;
     
-    var testGoals = ["wash dishes", "cry"];
-    userObject.goals = userObject.goals.concat(testGoals);
+    // var testGoals = ["wash dishes", "cry"];
+    // userObject.goals = userObject.goals.concat(testGoals);
 
     var goalListEl = document.querySelector('.card.personal .goals');
 
@@ -49,10 +50,23 @@ function populatePerson() {
         labelEl.appendChild(spanEl);
         labelEl.appendChild(pEl);
 
-        var addGoalEl = document.querySelector("#addGoalButton");
-        goalListEl.insertBefore(labelEl, addGoalEl);
+        var addGoalEl = document.querySelector(".goalList");
+        addGoalEl.appendChild(labelEl);
     }
-}  
+}
+
+function addGoal() {
+    var username = localStorage.getItem("username");
+    var dictionary = new Map(JSON.parse(localStorage.getItem('dictionary')));
+    var userObject = dictionary.get(username);
+    
+    const userInput = document.querySelector("#goalInput").value;
+
+    userObject.goals.push(userInput);
+    dictionary.set(username, userObject);
+    localStorage.setItem("dictionary", JSON.stringify(Array.from(dictionary.entries())));
+    populatePerson();
+}
 
 class Person {
     userName;
