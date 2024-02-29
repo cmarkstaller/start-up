@@ -79,7 +79,9 @@ function addFriend() {
     selectEl.onchange = function() {
         selectFriend(this.value);
     };
-
+    var def = document.createElement('option');
+    def.textContent = "friends";
+    selectEl.appendChild(def);
     dictionary.forEach(function(value, key) {
         if (!userObject.friends.includes(key) && key !== username) {
             var person = document.createElement('option');
@@ -112,9 +114,16 @@ function resetAddFriendCard() {
     while (parentElement.firstChild) {
         parentElement.removeChild(parentElement.firstChild);
     }
+    displayFriendCards();
 }
 
 function displayFriendCards() {
+    var parentElement = document.querySelector(".container");
+    var elementsToDelete = parentElement.querySelectorAll(".deleteFriend");
+    elementsToDelete.forEach(function(element) {
+        element.remove();
+    });
+    
     var username = localStorage.getItem("username");
     var dictionary = new Map(JSON.parse(localStorage.getItem('dictionary')));
     var userObject = dictionary.get(username);
@@ -133,6 +142,7 @@ function displayFriendCard(user) {
 
     var cardEl = document.createElement('div');
     cardEl.classList.add("card");
+    cardEl.classList.add("deleteFriend");
 
     var h1El = document.createElement('h1');
     h1El.textContent = user;
@@ -156,8 +166,9 @@ function displayFriendCard(user) {
         goalsEl.appendChild(labelEl);
     }
     
+    var addFriendEl = document.querySelector(".addfriend");
     cardEl.appendChild(goalsEl);
-    containerEl.appendChild(cardEl);
+    containerEl.insertBefore(cardEl, addFriendEl);
 
     
 
