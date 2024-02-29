@@ -75,6 +75,7 @@ function renderGoals() {
         var labelEl = document.createElement('label');
         var checkboxEl = document.createElement('input');
         checkboxEl.type = 'checkbox';
+        checkboxEl.addEventListener('change', createCheckboxChangeHandler(goal));
         var spanEl = document.createElement('span');
         var pEl = document.createElement('p');
         pEl.textContent = goal;
@@ -85,6 +86,28 @@ function renderGoals() {
 
         var addGoalEl = document.querySelector(".goalList");
         addGoalEl.appendChild(labelEl);
+    }
+}
+
+function createCheckboxChangeHandler(goal) {
+    return function(event) {
+        handleCheckboxChange(event, goal);
+    };
+}
+
+function handleCheckboxChange(event, goal) {
+    var username = localStorage.getItem("username");
+    var dictionary = new Map(JSON.parse(localStorage.getItem('dictionary')));
+    var userObject = dictionary.get(username);
+    
+    // Assuming userObject.goals is an array and not an object property
+    var index = userObject.goals.indexOf(goal);
+    console.log(index);
+    if (index !== -1) {
+        userObject.goals.splice(index, 1); // Remove the goal from the array
+        dictionary.set(username, userObject);
+        localStorage.setItem("dictionary", JSON.stringify(Array.from(dictionary.entries())));
+        renderGoals(); // Update the UI
     }
 }
 
