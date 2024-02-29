@@ -81,10 +81,12 @@ function addFriend() {
     };
 
     dictionary.forEach(function(value, key) {
-        var person = document.createElement('option');
-        person.value = key;
-        person.textContent = key;
-        selectEl.appendChild(person);
+        if (!userObject.friends.includes(key) && key !== username) {
+            var person = document.createElement('option');
+            person.value = key;
+            person.textContent = key;
+            selectEl.appendChild(person);
+        }
     });
 
     var addFriendCard = document.querySelector('#addFriendCard');
@@ -102,10 +104,14 @@ function selectFriend(user) {
         localStorage.setItem("dictionary", JSON.stringify(Array.from(dictionary.entries())));
         console.log("I made it in here");
     }
+    resetAddFriendCard();
 }
 
 function resetAddFriendCard() {
-    document.querySelector("#addFriendCard");
+    var parentElement = document.querySelector("#addFriendCard");
+    while (parentElement.firstChild) {
+        parentElement.removeChild(parentElement.firstChild);
+    }
 }
 
 class Person {
