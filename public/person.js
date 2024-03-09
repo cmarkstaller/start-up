@@ -1,4 +1,4 @@
-function login(event) {
+async function login(event) {
     event.preventDefault();
     
     // Sets local storage username value to current username;
@@ -17,9 +17,24 @@ function login(event) {
     if (!dictionary.has(usernameEl)) {
         dictionary.set(usernameEl, new Person(usernameEl));
     }
+
+    let send = await fetch('/api/addUser', {
+        method: 'POST',
+        headers: {'content-type': 'application/json'},
+        body: JSON.stringify(new Person(usernameEl))
+    });
+
+
     
     // Send the dictionary back up to storage.
     localStorage.setItem("dictionary", JSON.stringify(Array.from(dictionary.entries())));
+
+    // const response = fetch('/api/getUser', {
+    //     method: 'GET',
+    //     headers: {'content-type': 'application/json'},
+    //     body: "Here is my username"
+    //   });
+
 
     window.location.href = "main.html";
   }
@@ -34,30 +49,6 @@ function populatePerson() {
     h1El.textContent = username;
 
     renderGoals();
-    // var goalListEl = document.querySelector('.card.personal .goals');
-    // var parentElement = document.querySelector(".goalList");
-    // while (parentElement.firstChild) {
-    //     parentElement.removeChild(parentElement.firstChild);
-    // }
-
-    // for (var goal of userObject.goals) {
-    //     var labelEl = document.createElement('label');
-    //     var checkboxEl = document.createElement('input');
-    //     checkboxEl.type = 'checkbox';
-    //     checkboxEl.addEventListener('change', function(event) {
-    //         handleCheckboxChange(event, goal);
-    //     });
-    //     var spanEl = document.createElement('span');
-    //     var pEl = document.createElement('p');
-    //     pEl.textContent = goal;
-
-    //     labelEl.appendChild(checkboxEl);
-    //     labelEl.appendChild(spanEl);
-    //     labelEl.appendChild(pEl);
-
-    //     var addGoalEl = document.querySelector(".goalList");
-    //     addGoalEl.appendChild(labelEl);
-    // }
 }
 
 function renderGoals() {
@@ -223,35 +214,6 @@ function displayFriendCard(user) {
     var addFriendEl = document.querySelector(".addfriend");
     cardEl.appendChild(goalsEl);
     containerEl.insertBefore(cardEl, addFriendEl);
-
-    
-
-
-
-
-    // <div class="friendCards">
-    //         <div class="card">
-    //             <h1>Name</h1>
-    //             <div class="goals">
-    //                 <label>
-    //                     <input type="checkbox">
-    //                     <span></span>
-    //                     <p>Goal 1</p>
-    //                 </label>
-    //                 <label>
-    //                     <input type="checkbox">
-    //                     <span></span>
-    //                     <p>Goal 2</p>
-    //                 </label>
-    //                 <label>
-    //                     <input type="checkbox">
-    //                     <span></span>
-    //                     <p>Goal 3</p>
-    //                 </label>
-    //             </div>
-    //         </div>
-    //     </div>
-
 }
 
 class Person {
