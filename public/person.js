@@ -24,10 +24,13 @@ async function login(event) {
         body: JSON.stringify(new Person(usernameEl))
     });
 
-    let personList = await fetch('/api/listUsers', {
+    let response = await fetch('/api/listUsers', {
         method: 'GET',
         headers: {'content-type': 'application/json'}
     });
+
+    let personList = await response.json();
+    console.log(personList);
     
     // Send the dictionary back up to storage.
     localStorage.setItem("dictionary", JSON.stringify(Array.from(dictionary.entries())));

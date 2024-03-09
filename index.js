@@ -64,12 +64,22 @@ apiRouter.post('/addUser', (req, res) => {
 //     console.log(username);
 //   });
 
+
 // ListUsers
 apiRouter.get('/listUsers', (req, res) => {
   console.log(dictionary);
-  const personArray = Object.values(dictionary);
-  console.log(personArray);
-  res.status(200).send(personArray);
+  console.log('Keys:', Object.keys(dictionary));
+  console.log('Values:', Object.values(dictionary));
+  const valuesArray = Array.from(dictionary.values());
+  
+  // const valuesArray = [];
+  // for (const key in dictionary) {
+  //   if (dictionary.hasOwnProperty(key)) {
+  //     valuesArray.push(dictionary[key]);
+  //   }
+  // }
+  console.log(valuesArray);
+  res.status(200).send(valuesArray);
 });
 
 // // UpdateUser
