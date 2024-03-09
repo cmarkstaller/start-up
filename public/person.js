@@ -24,16 +24,13 @@ async function login(event) {
         body: JSON.stringify(new Person(usernameEl))
     });
 
-
+    let personList = await fetch('/api/listUsers', {
+        method: 'GET',
+        headers: {'content-type': 'application/json'}
+    });
     
     // Send the dictionary back up to storage.
     localStorage.setItem("dictionary", JSON.stringify(Array.from(dictionary.entries())));
-
-    // const response = fetch('/api/getUser', {
-    //     method: 'GET',
-    //     headers: {'content-type': 'application/json'},
-    //     body: "Here is my username"
-    //   });
 
 
     window.location.href = "main.html";

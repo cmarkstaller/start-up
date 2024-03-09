@@ -22,6 +22,8 @@ class Person {
   }
 }
 
+var dictionary = new Map();
+
 const express = require('express');
 const app = express();
 
@@ -50,18 +52,30 @@ apiRouter.post('/score', (req, res) => {
 });
 
 // AddUser
-
 apiRouter.post('/addUser', (req, res) => {
-  console.log(req.body);
-  console.log (new Person(req.body.userName, req.body.goals, req.body.friends));
+  dictionary.set(req.body.userName, new Person(req.body.userName, req.body.goals, req.body.friends));
+  res.status(200).send('Resource updated successfully');
 });
 
-// GetUser
-apiRouter.get('/getUser', (req, res) => {
-  console.log(req.body);  
-  var username = req.body;
-    console.log(username);
-  });
+// // GetUser
+// apiRouter.get('/getUser', (req, res) => {
+//   console.log(req.body);  
+//   var username = req.body;
+//     console.log(username);
+//   });
+
+// ListUsers
+apiRouter.get('/listUsers', (req, res) => {
+  console.log(dictionary);
+  const personArray = Object.values(dictionary);
+  console.log(personArray);
+  res.status(200).send(personArray);
+});
+
+// // UpdateUser
+// apiRouter.put('/updateUser', (req, res) => {
+
+// });
 
 // Return the application's default page if the path is unknown
 app.use((_req, res) => {
@@ -71,20 +85,3 @@ app.use((_req, res) => {
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });
-
-// AddUser
-
-// ListUsers
-
-// GetUser
-apiRouter.get('/getUser', (req, res) => {
-  console.log(req.body);  
-  var username = req.body;
-    console.log(username);
-  });
-
-var dictionary = new Map();
-
-dictionary.set('Tim', new Person('Tim'));
-dictionary.set('Sam', new Person('Sam'));
-dictionary.set('Art', new Person('Art'));
