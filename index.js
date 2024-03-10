@@ -58,27 +58,17 @@ apiRouter.post('/addUser', (req, res) => {
 });
 
 // // GetUser
-// apiRouter.get('/getUser', (req, res) => {
-//   console.log(req.body);  
-//   var username = req.body;
-//     console.log(username);
-//   });
+apiRouter.get('/getUser/:username', (req, res) => {
+  const username = req.params.username;
+  console.log(username);
+  console.log(dictionary.get(username));
+  res.status(200).send(dictionary.get(username));
+  });
 
 
 // ListUsers
 apiRouter.get('/listUsers', (req, res) => {
-  console.log(dictionary);
-  console.log('Keys:', Object.keys(dictionary));
-  console.log('Values:', Object.values(dictionary));
   const valuesArray = Array.from(dictionary.values());
-  
-  // const valuesArray = [];
-  // for (const key in dictionary) {
-  //   if (dictionary.hasOwnProperty(key)) {
-  //     valuesArray.push(dictionary[key]);
-  //   }
-  // }
-  console.log(valuesArray);
   res.status(200).send(valuesArray);
 });
 
