@@ -1,3 +1,27 @@
+class Person {
+    userName;
+    goals;
+    friends;
+
+    constructor(userName, goals = [], friends = []) {
+        this.userName = userName;
+        this.goals = goals;
+        this.friends = friends;
+    }
+
+    getname() {
+        return(this.userName);
+    }
+
+    addFriend(person) {
+        this.friends.push(person);
+    }
+
+    addGoal(goal) {
+        this.goals.push(goal);
+    }
+}
+
 async function login(event) {
     event.preventDefault();
     
@@ -15,7 +39,7 @@ async function login(event) {
     
     // Add a user object to the dictionary if it isn't already in there
     if (!dictionary.has(usernameEl)) {
-        dictionary.set(usernameEl, new Person(usernameEl));
+        dictionary.set(usernameEl, new Person(usernameEl, [], []));
     }
 
     let send = await fetch('/api/addUser', {
@@ -37,9 +61,19 @@ async function login(event) {
         headers: {'content-type': 'application/json'}
     });
     
-    let myUser = await getUserObject.json();
-    console.log(myUser);
-    
+    let userData = await getUserObject.json();
+    console.log(userData);
+    console.log(typeof(userData));
+    let myUser = new Person(userData.userName, userData.goals, userData.friends);
+
+    myUser.addGoal("wash dishes");
+
+    let updateUser = await fetch('/api/updateUser', {
+        method: 'PUT',
+        headers: {'content-type': 'application/json'},
+        body: JSON.stringify(myUser)
+    });
+
     // Send the dictionary back up to storage.
     localStorage.setItem("dictionary", JSON.stringify(Array.from(dictionary.entries())));
 
@@ -224,26 +258,3 @@ function displayFriendCard(user) {
     containerEl.insertBefore(cardEl, addFriendEl);
 }
 
-class Person {
-    userName;
-    goals;
-    friends;
-
-    constructor(userName) {
-        this.userName = userName;
-        this.goals = []
-        this.friends = []
-    }
-
-    getname() {
-        return(this.userName);
-    }
-
-    addFriend(person) {
-        this.friends.push(person);
-    }
-
-    addGoal(goal) {
-        this.goals.push(goal);
-    }
-}

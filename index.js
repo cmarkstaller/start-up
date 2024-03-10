@@ -3,7 +3,7 @@ class Person {
   goals;
   friends;
 
-  constructor(userName, goals, friends) {
+  constructor(userName, goals = [], friends = []) {
       this.userName = userName;
       this.goals = goals;
       this.friends = friends;
@@ -62,7 +62,16 @@ apiRouter.get('/getUser/:username', (req, res) => {
   const username = req.params.username;
   console.log(username);
   console.log(dictionary.get(username));
-  res.status(200).send(dictionary.get(username));
+
+  const userFromDictionary = dictionary.get(username);
+  const userInstance = new Person(
+    userFromDictionary.userName,
+    userFromDictionary.goals,
+    userFromDictionary.friends
+  );
+
+  res.status(200).send(userInstance);
+  //res.status(200).send(dictionary.get(username));
   });
 
 
@@ -72,10 +81,12 @@ apiRouter.get('/listUsers', (req, res) => {
   res.status(200).send(valuesArray);
 });
 
-// // UpdateUser
-// apiRouter.put('/updateUser', (req, res) => {
-
-// });
+// UpdateUser
+apiRouter.put('/updateUser', (req, res) => {
+  dictionary.set(req.body.userName, new Person(req.body.userName, req.body.goals, req.body.friends));
+  console.log(dictionary);
+  res.status(200).send('Resource updated successfully');
+});
 
 // Return the application's default page if the path is unknown
 app.use((_req, res) => {
