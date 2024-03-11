@@ -332,3 +332,26 @@ async function displayFriendCard(user) {
     containerEl.insertBefore(cardEl, addFriendEl);
 }
 
+function displayQuote(data) {
+    fetch('https://api.quotable.io/random')
+      .then((response) => response.json())
+      .then((data) => {
+        const containerEl = document.querySelector('#fetchQuote');
+  
+        const quoteEl = document.createElement('p');
+        quoteEl.classList.add('quote');
+        const authorEl = document.createElement('p');
+        authorEl.classList.add('person');
+  
+        quoteEl.textContent = data.content;
+        authorEl.textContent = data.author;
+  
+        containerEl.appendChild(quoteEl);
+        containerEl.appendChild(authorEl);
+    });
+}
+
+//   <div class="card quote-card">
+//             <p class="quote">"If you're bored with life, you don't get up every morning with a burning desire to do things, you don't have enough goals."</p>
+//             <p class="person"> – Lou Holtz -</p>
+//         </div>
