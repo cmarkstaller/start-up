@@ -22,6 +22,24 @@ class Person {
     }
 }
 
+async function createMap() {
+    let keys = await listUsernames();
+    let values = await listUsers();
+    
+    if (keys.length !== values.length) {
+      console.error("Lists must have the same length.");
+      return null;
+    }
+  
+    const myMap = new Map();
+  
+    for (let i = 0; i < keys.length; i++) {
+      myMap.set(keys[i], values[i]);
+    }
+  
+    return myMap;
+}
+
 // addUser(usernameEl);
 async function addUser(username) {
     // let send = await fetch('/api/addUser', {
@@ -91,31 +109,31 @@ async function login(event) {
     }
 
     // pull the dictionary from storage
-    var dictionary = new Map(JSON.parse(localStorage.getItem('dictionary')));
+    //var dictionary = new Map(JSON.parse(localStorage.getItem('dictionary')));
+    var dictionary = await createMap();
     
     // Add a user object to the dictionary if it isn't already in there
     if (!dictionary.has(usernameEl)) {
-        dictionary.set(usernameEl, new Person(usernameEl, [], []));
-    }
-
-    let usernames = await listUsernames();
-    
-    if (!usernames.includes(usernameEl)) {
+        //dictionary.set(usernameEl, new Person(usernameEl, [], []));
         addUser(usernameEl);
     }
 
-    console.log(await listUsers());
+    // add user to DB if not already in there
+    let usernames = await listUsernames();
+    // if (!usernames.includes(usernameEl)) {
+    //     addUser(usernameEl);
+    // }
 
     // Send the dictionary back up to storage.
-    localStorage.setItem("dictionary", JSON.stringify(Array.from(dictionary.entries())));
+    //localStorage.setItem("dictionary", JSON.stringify(Array.from(dictionary.entries())));
 
     window.location.href = "main.html";
 }
 
 function populatePerson() {
     var username = localStorage.getItem("username");
-    var dictionary = new Map(JSON.parse(localStorage.getItem('dictionary')));
-    var userObject = dictionary.get(username);
+    // var dictionary = new Map(JSON.parse(localStorage.getItem('dictionary')));
+    // var userObject = dictionary.get(username);
 
     // Sets the username
     var h1El = document.querySelector('.card.personal h1')
@@ -124,13 +142,20 @@ function populatePerson() {
     renderGoals();
 }
 
-function renderGoals() {
+async function renderGoals() {
+    // Pull info from local storage
     var username = localStorage.getItem("username");
-    var dictionary = new Map(JSON.parse(localStorage.getItem('dictionary')));
+    //var dictionary = new Map(JSON.parse(localStorage.getItem('dictionary')));
+    var dictionary = await createMap();
     var userObject = dictionary.get(username);
+
+    // Pull current user from database
+    // var userObject = await getUser(username);
     
     var goalListEl = document.querySelector('.card.personal .goals');
     var parentElement = document.querySelector(".goalList");
+    
+    // wipe the goals portion of the html
     while (parentElement.firstChild) {
         parentElement.removeChild(parentElement.firstChild);
     }
@@ -159,47 +184,62 @@ function createCheckboxChangeHandler(goal) {
     };
 }
 
-function handleCheckboxChange(event, goal) {
+async function handleCheckboxChange(event, goal) {
     var username = localStorage.getItem("username");
-    var dictionary = new Map(JSON.parse(localStorage.getItem('dictionary')));
+    // var dictionary = new Map(JSON.parse(localStorage.getItem('dictionary')));
+    var dictionary = await createMap();
     var userObject = dictionary.get(username);
+    //var userObject = await getUser(username);
     
+
     // Assuming userObject.goals is an array and not an object property
     var index = userObject.goals.indexOf(goal);
     console.log(index);
     if (index !== -1) {
         userObject.goals.splice(index, 1); // Remove the goal from the array
-        dictionary.set(username, userObject);
-        localStorage.setItem("dictionary", JSON.stringify(Array.from(dictionary.entries())));
+        // dictionary.set(username, userObject);
+        // localStorage.setItem("dictionary", JSON.stringify(Array.from(dictionary.entries())));
+        updateUser(userObject);
         renderGoals(); // Update the UI
     }
 }
 
-function addGoal() {
+async function addGoal() {
     var username = localStorage.getItem("username");
-    var dictionary = new Map(JSON.parse(localStorage.getItem('dictionary')));
+    // var dictionary = new Map(JSON.parse(localStorage.getItem('dictionary')));
+    var dictionary = await createMap();
     var userObject = dictionary.get(username);
+    
+    // Pull user from DB
+    // var userObject = await getUser(username);
     
     const userInput = document.querySelector("#goalInput").value;
 
     userObject.goals.push(userInput);
-    dictionary.set(username, userObject);
-    localStorage.setItem("dictionary", JSON.stringify(Array.from(dictionary.entries())));
+    // dictionary.set(username, userObject);
+    // localStorage.setItem("dictionary", JSON.stringify(Array.from(dictionary.entries())));
+    updateUser(userObject);
     populatePerson();
 }
 
-function addFriend() {
+async function addFriend() {
     var username = localStorage.getItem("username");
-    var dictionary = new Map(JSON.parse(localStorage.getItem('dictionary')));
+    // var dictionary = new Map(JSON.parse(localStorage.getItem('dictionary')));
+    var dictionary = await createMap();
     var userObject = dictionary.get(username);
+    
+    // Get user from DB
+    // var userOjbect = await getUser(username);
 
     var selectEl = document.createElement('select');
     selectEl.onchange = function() {
         selectFriend(this.value);
     };
+
     var def = document.createElement('option');
     def.textContent = "friends";
     selectEl.appendChild(def);
+
     dictionary.forEach(function(value, key) {
         if (!userObject.friends.includes(key) && key !== username) {
             var person = document.createElement('option');
@@ -213,16 +253,17 @@ function addFriend() {
     addFriendCard.appendChild(selectEl);
 }
 
-function selectFriend(user) {
+async function selectFriend(user) {
     var username = localStorage.getItem("username");
-    var dictionary = new Map(JSON.parse(localStorage.getItem('dictionary')));
+    //var dictionary = new Map(JSON.parse(localStorage.getItem('dictionary')));
+    var dictionary = await createMap();
     var userObject = dictionary.get(username);
 
     if (!userObject.friends.includes(user) && user !== username) {
         userObject.friends.push(user);
-        dictionary.set(username, userObject);
-        localStorage.setItem("dictionary", JSON.stringify(Array.from(dictionary.entries())));
-        console.log("I made it in here");
+        updateUser(userObject);
+        // dictionary.set(username, userObject);
+        // localStorage.setItem("dictionary", JSON.stringify(Array.from(dictionary.entries())));
     }
     resetAddFriendCard();
 }
@@ -235,7 +276,7 @@ function resetAddFriendCard() {
     displayFriendCards();
 }
 
-function displayFriendCards() {
+async function displayFriendCards() {
     var parentElement = document.querySelector(".container");
     var elementsToDelete = parentElement.querySelectorAll(".deleteFriend");
     elementsToDelete.forEach(function(element) {
@@ -243,7 +284,8 @@ function displayFriendCards() {
     });
     
     var username = localStorage.getItem("username");
-    var dictionary = new Map(JSON.parse(localStorage.getItem('dictionary')));
+    // var dictionary = new Map(JSON.parse(localStorage.getItem('dictionary')));
+    var dictionary = await createMap();
     var userObject = dictionary.get(username);
 
     for (var user of userObject.friends) {
@@ -251,9 +293,10 @@ function displayFriendCards() {
     }
 }
 
-function displayFriendCard(user) {
+async function displayFriendCard(user) {
     var username = localStorage.getItem("username");
-    var dictionary = new Map(JSON.parse(localStorage.getItem('dictionary')));
+    // var dictionary = new Map(JSON.parse(localStorage.getItem('dictionary')));
+    var dictionary = await createMap();
     var userObject = dictionary.get(username);
     
     var containerEl = document.querySelector(".container");

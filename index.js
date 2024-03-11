@@ -60,8 +60,6 @@ apiRouter.post('/addUser', (req, res) => {
 // // GetUser
 apiRouter.get('/getUser/:username', (req, res) => {
   const username = req.params.username;
-  console.log(username);
-  console.log(dictionary.get(username));
 
   const userFromDictionary = dictionary.get(username);
   const userInstance =  new Person(
@@ -71,7 +69,6 @@ apiRouter.get('/getUser/:username', (req, res) => {
   );
 
   res.status(200).send(userInstance);
-  //res.status(200).send(dictionary.get(username));
   });
 
 
