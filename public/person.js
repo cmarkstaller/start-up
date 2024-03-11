@@ -22,6 +22,51 @@ class Person {
     }
 }
 
+// addUser(usernameEl);
+async function addUser(username) {
+    // let send = await fetch('/api/addUser', {
+    fetch('/api/addUser', {
+        method: 'POST',
+        headers: {'content-type': 'application/json'},
+        body: JSON.stringify(new Person(username))
+    });
+}
+
+// let myUser = await getUser(usernameEl);
+async function getUser(username) {
+    let getUserObject = await fetch(`/api/getUser/${username}`, {
+        method: 'GET',
+        headers: {'content-type': 'application/json'}
+    });
+    
+    let userData = await getUserObject.json();
+    console.log(userData);
+    console.log(typeof(userData));
+    let myUser = new Person(userData.userName, userData.goals, userData.friends);
+    return(myUser);
+}
+
+// updateUser(myUser);
+async function updateUser(myUser) {
+    // let updateUser = await fetch('/api/updateUser', {
+    fetch('/api/updateUser', {
+        method: 'PUT',
+        headers: {'content-type': 'application/json'},
+        body: JSON.stringify(myUser)
+    });
+}
+
+// let personList = await listUsers();
+async function listUsers() {
+    let response = await fetch('/api/listUsers', {
+        method: 'GET',
+        headers: {'content-type': 'application/json'}
+    });
+
+    let personList = await response.json();
+    return(personList);
+}
+
 async function login(event) {
     event.preventDefault();
     
@@ -42,44 +87,11 @@ async function login(event) {
         dictionary.set(usernameEl, new Person(usernameEl, [], []));
     }
 
-    let send = await fetch('/api/addUser', {
-        method: 'POST',
-        headers: {'content-type': 'application/json'},
-        body: JSON.stringify(new Person(usernameEl))
-    });
-
-    let response = await fetch('/api/listUsers', {
-        method: 'GET',
-        headers: {'content-type': 'application/json'}
-    });
-
-    let personList = await response.json();
-    console.log(personList);
-
-    let getUserObject = await fetch(`/api/getUser/${usernameEl}`, {
-        method: 'GET',
-        headers: {'content-type': 'application/json'}
-    });
-    
-    let userData = await getUserObject.json();
-    console.log(userData);
-    console.log(typeof(userData));
-    let myUser = new Person(userData.userName, userData.goals, userData.friends);
-
-    myUser.addGoal("wash dishes");
-
-    let updateUser = await fetch('/api/updateUser', {
-        method: 'PUT',
-        headers: {'content-type': 'application/json'},
-        body: JSON.stringify(myUser)
-    });
-
     // Send the dictionary back up to storage.
     localStorage.setItem("dictionary", JSON.stringify(Array.from(dictionary.entries())));
 
-
     window.location.href = "main.html";
-  }
+}
 
 function populatePerson() {
     var username = localStorage.getItem("username");
