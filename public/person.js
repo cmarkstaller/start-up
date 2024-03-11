@@ -22,6 +22,7 @@ class Person {
     }
 }
 
+// Turn two lists into a map
 async function createMap() {
     let keys = await listUsernames();
     let values = await listUsers();
@@ -42,7 +43,6 @@ async function createMap() {
 
 // addUser(usernameEl);
 async function addUser(username) {
-    // let send = await fetch('/api/addUser', {
     fetch('/api/addUser', {
         method: 'POST',
         headers: {'content-type': 'application/json'},
@@ -66,7 +66,6 @@ async function getUser(username) {
 
 // updateUser(myUser);
 async function updateUser(myUser) {
-    // let updateUser = await fetch('/api/updateUser', {
     fetch('/api/updateUser', {
         method: 'PUT',
         headers: {'content-type': 'application/json'},
@@ -109,31 +108,18 @@ async function login(event) {
     }
 
     // pull the dictionary from storage
-    //var dictionary = new Map(JSON.parse(localStorage.getItem('dictionary')));
     var dictionary = await createMap();
     
     // Add a user object to the dictionary if it isn't already in there
     if (!dictionary.has(usernameEl)) {
-        //dictionary.set(usernameEl, new Person(usernameEl, [], []));
         addUser(usernameEl);
     }
-
-    // add user to DB if not already in there
-    let usernames = await listUsernames();
-    // if (!usernames.includes(usernameEl)) {
-    //     addUser(usernameEl);
-    // }
-
-    // Send the dictionary back up to storage.
-    //localStorage.setItem("dictionary", JSON.stringify(Array.from(dictionary.entries())));
 
     window.location.href = "main.html";
 }
 
 function populatePerson() {
     var username = localStorage.getItem("username");
-    // var dictionary = new Map(JSON.parse(localStorage.getItem('dictionary')));
-    // var userObject = dictionary.get(username);
 
     // Sets the username
     var h1El = document.querySelector('.card.personal h1')
@@ -145,12 +131,8 @@ function populatePerson() {
 async function renderGoals() {
     // Pull info from local storage
     var username = localStorage.getItem("username");
-    //var dictionary = new Map(JSON.parse(localStorage.getItem('dictionary')));
     var dictionary = await createMap();
     var userObject = dictionary.get(username);
-
-    // Pull current user from database
-    // var userObject = await getUser(username);
     
     var goalListEl = document.querySelector('.card.personal .goals');
     var parentElement = document.querySelector(".goalList");
@@ -186,19 +168,14 @@ function createCheckboxChangeHandler(goal) {
 
 async function handleCheckboxChange(event, goal) {
     var username = localStorage.getItem("username");
-    // var dictionary = new Map(JSON.parse(localStorage.getItem('dictionary')));
     var dictionary = await createMap();
     var userObject = dictionary.get(username);
-    //var userObject = await getUser(username);
     
-
     // Assuming userObject.goals is an array and not an object property
     var index = userObject.goals.indexOf(goal);
     console.log(index);
     if (index !== -1) {
         userObject.goals.splice(index, 1); // Remove the goal from the array
-        // dictionary.set(username, userObject);
-        // localStorage.setItem("dictionary", JSON.stringify(Array.from(dictionary.entries())));
         updateUser(userObject);
         renderGoals(); // Update the UI
     }
@@ -206,30 +183,20 @@ async function handleCheckboxChange(event, goal) {
 
 async function addGoal() {
     var username = localStorage.getItem("username");
-    // var dictionary = new Map(JSON.parse(localStorage.getItem('dictionary')));
     var dictionary = await createMap();
     var userObject = dictionary.get(username);
-    
-    // Pull user from DB
-    // var userObject = await getUser(username);
     
     const userInput = document.querySelector("#goalInput").value;
 
     userObject.goals.push(userInput);
-    // dictionary.set(username, userObject);
-    // localStorage.setItem("dictionary", JSON.stringify(Array.from(dictionary.entries())));
     updateUser(userObject);
     populatePerson();
 }
 
 async function addFriend() {
     var username = localStorage.getItem("username");
-    // var dictionary = new Map(JSON.parse(localStorage.getItem('dictionary')));
     var dictionary = await createMap();
     var userObject = dictionary.get(username);
-    
-    // Get user from DB
-    // var userOjbect = await getUser(username);
 
     var selectEl = document.createElement('select');
     selectEl.onchange = function() {
@@ -255,15 +222,12 @@ async function addFriend() {
 
 async function selectFriend(user) {
     var username = localStorage.getItem("username");
-    //var dictionary = new Map(JSON.parse(localStorage.getItem('dictionary')));
     var dictionary = await createMap();
     var userObject = dictionary.get(username);
 
     if (!userObject.friends.includes(user) && user !== username) {
         userObject.friends.push(user);
         updateUser(userObject);
-        // dictionary.set(username, userObject);
-        // localStorage.setItem("dictionary", JSON.stringify(Array.from(dictionary.entries())));
     }
     resetAddFriendCard();
 }
@@ -284,7 +248,6 @@ async function displayFriendCards() {
     });
     
     var username = localStorage.getItem("username");
-    // var dictionary = new Map(JSON.parse(localStorage.getItem('dictionary')));
     var dictionary = await createMap();
     var userObject = dictionary.get(username);
 
@@ -295,7 +258,6 @@ async function displayFriendCards() {
 
 async function displayFriendCard(user) {
     var username = localStorage.getItem("username");
-    // var dictionary = new Map(JSON.parse(localStorage.getItem('dictionary')));
     var dictionary = await createMap();
     var userObject = dictionary.get(username);
     
@@ -350,8 +312,3 @@ function displayQuote(data) {
         containerEl.appendChild(authorEl);
     });
 }
-
-//   <div class="card quote-card">
-//             <p class="quote">"If you're bored with life, you don't get up every morning with a burning desire to do things, you don't have enough goals."</p>
-//             <p class="person"> – Lou Holtz -</p>
-//         </div>
