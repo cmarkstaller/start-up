@@ -86,3 +86,19 @@ Yup, still doing this using two variables, username and dictionary.
 
 ## Have JavaScript that mocks out the realtime data you expect to get from the server using WebSocket and inject it into the DOM.
 Friends goals are updated as a friend updates their goals. To test this functionality, try adding a few users by logging in and logging out, giving each of those users a few goals. Websocket will call display friend Cards to accomplish this.
+
+# Service Startup
+## Create an HTTP service using Node.js and Express
+I made 5 services located in index.js
+
+## Frontend served up using Express static middleware
+My frontend calls an add user, get user, list user, and update user service.
+
+## Your frontend calls third party service endpoints
+I call a quote service to populate my quote card on the main page.
+
+## Your backend provides service endpoints
+Yup, it does that.
+
+## Your frontend calls your service endpoints
+Yup, we do that too
