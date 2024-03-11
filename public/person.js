@@ -67,6 +67,17 @@ async function listUsers() {
     return(personList);
 }
 
+// let nameList = await listUsernames();
+async function listUsernames() {
+    let response = await fetch('/api/listUsernames', {
+        method: 'GET',
+        headers: {'content-type': 'application/json'}
+    });
+
+    let usernameList = await response.json();
+    return(usernameList);
+}
+
 async function login(event) {
     event.preventDefault();
     
@@ -86,6 +97,14 @@ async function login(event) {
     if (!dictionary.has(usernameEl)) {
         dictionary.set(usernameEl, new Person(usernameEl, [], []));
     }
+
+    let usernames = await listUsernames();
+    
+    if (!usernames.includes(usernameEl)) {
+        addUser(usernameEl);
+    }
+
+    console.log(await listUsers());
 
     // Send the dictionary back up to storage.
     localStorage.setItem("dictionary", JSON.stringify(Array.from(dictionary.entries())));

@@ -64,7 +64,7 @@ apiRouter.get('/getUser/:username', (req, res) => {
   console.log(dictionary.get(username));
 
   const userFromDictionary = dictionary.get(username);
-  const userInstance = new Person(
+  const userInstance =  new Person(
     userFromDictionary.userName,
     userFromDictionary.goals,
     userFromDictionary.friends
@@ -80,6 +80,12 @@ apiRouter.get('/listUsers', (req, res) => {
   const valuesArray = Array.from(dictionary.values());
   res.status(200).send(valuesArray);
 });
+
+// ListUsernames
+apiRouter.get('/listUsernames', (req, res) => {
+  const valuesArray = Array.from(dictionary.keys());
+  res.status(200).send(valuesArray);
+})
 
 // UpdateUser
 apiRouter.put('/updateUser', (req, res) => {
