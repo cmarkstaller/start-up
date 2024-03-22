@@ -1,12 +1,13 @@
 const { MongoClient } = require('mongodb');
-// const bcrypt = require('bcrypt');
-// const uuid = require('uuid');
+const bcrypt = require('bcrypt');
+const uuid = require('uuid');
 const config = require('./dbConfig.json');
 
 const url = `mongodb+srv://${config.userName}:${config.password}@${config.hostname}`;
 const client = new MongoClient(url);
 const db = client.db('startup');
 const userCollection = db.collection('user');
+const authCollection = db.collection('auth');
 
 // This will asynchronously test the connection and exit the process if it fails
 (async function testConnection() {
@@ -17,29 +18,29 @@ const userCollection = db.collection('user');
   process.exit(1);
 });
 
-function getUser(email) {
-  return userCollection.findOne({ email: email });
+function getUser(username) {
+  return authCollection.findOne({ username: username });
 }
 
 function getUserByToken(token) {
-  return userCollection.findOne({ token: token });
+  return authCollection.findOne({ token: token });
 }
 
-// async function createUser(email, password) {
-//   // Hash the password before we insert it into the database
-//   const passwordHash = await bcrypt.hash(password, 10);
+async function createUser(username, password) {
+  // Hash the password before we insert it into the database
+  const passwordHash = await bcrypt.hash(password, 10);
 
-//   const user = {
-//     email: email,
-//     password: passwordHash,
-//     token: uuid.v4(),
-//   };
-//   await userCollection.insertOne(user);
+  const user = {
+    username: username,
+    password: passwordHash,
+    token: uuid.v4(),
+  };
+  await authCollection.insertOne(user);
 
-//   return user;
-// }
+  return user;
+}
 
-async function createUser(username, goals, friends) {
+async function createPerson(username, goals, friends) {
   const user = {
     username: username,
     goals: goals,
@@ -48,7 +49,7 @@ async function createUser(username, goals, friends) {
   await userCollection.insertOne(user);
 }
 
-async function getUser(username) {
+async function getPerson(username) {
   return userCollection.findOne({ username: username });
 }
 
@@ -67,27 +68,13 @@ async function updateUser(username, goals, friends) {
   createUser(username, goals, friends);
 }
 
-function addScore(score) {
-  scoreCollection.insertOne(score);
-}
-
-function getHighScores() {
-  const query = { score: { $gt: 0, $lt: 900 } };
-  const options = {
-    sort: { score: -1 },
-    limit: 10,
-  };
-  const cursor = scoreCollection.find(query, options);
-  return cursor.toArray();
-}
-
 module.exports = {
   getUser,
   getUserByToken,
   createUser,
+  createPerson,
+  getPerson,
   listUsers,
   listUsernames,
   updateUser,
-  addScore,
-  getHighScores,
 };

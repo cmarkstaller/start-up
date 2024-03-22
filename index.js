@@ -44,14 +44,14 @@ app.use(`/api`, apiRouter);
 // AddUser
 apiRouter.post('/addUser', (req, res) => {
   dictionary.set(req.body.userName, new Person(req.body.userName, req.body.goals, req.body.friends));
-  DB.createUser(req.body.userName, req.body.goals, req.body.friends);
+  DB.createPerson(req.body.userName, req.body.goals, req.body.friends);
   res.status(200).send('Resource updated successfully');
 });
 
 // // GetUser
 apiRouter.get('/getUser/:username', (req, res) => {
   const username = req.params.username;
-  const user = DB.getUser(username);
+  const user = DB.getPerson(username);
   
   const userInstance = new Person(
     user.username,
