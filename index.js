@@ -1,6 +1,3 @@
-const { MongoClient } = require('mongodb');
-const config = require('./dbConfig.json');
-
 class Person {
   userName;
   goals;
@@ -29,6 +26,7 @@ var dictionary = new Map();
 
 const express = require('express');
 const app = express();
+const DB = require('./database.js');
 
 // The service port. In production the frontend code is statically hosted by the service on the same port.
 const port = process.argv.length > 2 ? process.argv[2] : 3000;
@@ -46,40 +44,65 @@ app.use(`/api`, apiRouter);
 // AddUser
 apiRouter.post('/addUser', (req, res) => {
   dictionary.set(req.body.userName, new Person(req.body.userName, req.body.goals, req.body.friends));
+  DB.createUser(req.body.userName, req.body.goals, req.body.friends);
   res.status(200).send('Resource updated successfully');
 });
 
 // // GetUser
 apiRouter.get('/getUser/:username', (req, res) => {
   const username = req.params.username;
+  const user = DB.getUser(username);
   
-  const userFromDictionary = dictionary.get(username);
-  const userInstance =  new Person(
-    userFromDictionary.userName,
-    userFromDictionary.goals,
-    userFromDictionary.friends
+  const userInstance = new Person(
+    user.username,
+    user.goals,
+    user.friends
   );
+
+  // const userFromDictionary = dictionary.get(username);
+  // const userInstance =  new Person(
+  //   userFromDictionary.userName,
+  //   userFromDictionary.goals,
+  //   userFromDictionary.friends
+  // );
 
   res.status(200).send(userInstance);
   });
 
 
 // ListUsers
-apiRouter.get('/listUsers', (req, res) => {
-  const valuesArray = Array.from(dictionary.values());
+apiRouter.get('/listUsers', async (req, res) => {
+  //const valuesArray = Array.from(dictionary.values());
+  const valuesArray = await DB.listUsers();
+
+  let userArray = [];
+  for (let i = 0; i < valuesArray.length; i += 1) {
+    let username = valuesArray[i].username;
+    let goals = valuesArray[i].goals;
+    let friends = valuesArray[i].friends;
+    userArray.push(new Person(username, goals, friends));
+  }
   res.status(200).send(valuesArray);
 });
 
 // ListUsernames
-apiRouter.get('/listUsernames', (req, res) => {
-  const valuesArray = Array.from(dictionary.keys());
-  res.status(200).send(valuesArray);
+apiRouter.get('/listUsernames', async (req, res) => {
+  //const valuesArray = Array.from(dictionary.keys());
+  const valuesArray = await DB.listUsernames();
+
+  let usernameArray = [];
+  for (let i = 0; i < valuesArray.length; i += 1) {
+    usernameArray.push(valuesArray[i].username);
+  }
+
+  res.status(200).send(usernameArray);
 })
 
 // UpdateUser
 apiRouter.put('/updateUser', (req, res) => {
-  dictionary.set(req.body.userName, new Person(req.body.userName, req.body.goals, req.body.friends));
-  console.log(dictionary);
+  //dictionary.set(req.body.userName, new Person(req.body.userName, req.body.goals, req.body.friends));
+  //console.log(dictionary);
+  DB.updateUser(req.body.username, req.body.goals, req.body.friends);
   res.status(200).send('Resource updated successfully');
 });
 
