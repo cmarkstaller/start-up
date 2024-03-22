@@ -1,3 +1,6 @@
+const { MongoClient } = require('mongodb');
+const config = require('./dbConfig.json');
+
 class Person {
   userName;
   goals;
@@ -40,17 +43,6 @@ app.use(express.static('public'));
 const apiRouter = express.Router();
 app.use(`/api`, apiRouter);
 
-// GetScores
-apiRouter.get('/scores', (_req, res) => {
-  res.send(scores);
-});
-
-// SubmitScore
-apiRouter.post('/score', (req, res) => {
-  scores = updateScores(req.body, scores);
-  res.send(scores);
-});
-
 // AddUser
 apiRouter.post('/addUser', (req, res) => {
   dictionary.set(req.body.userName, new Person(req.body.userName, req.body.goals, req.body.friends));
@@ -60,7 +52,7 @@ apiRouter.post('/addUser', (req, res) => {
 // // GetUser
 apiRouter.get('/getUser/:username', (req, res) => {
   const username = req.params.username;
-
+  
   const userFromDictionary = dictionary.get(username);
   const userInstance =  new Person(
     userFromDictionary.userName,
