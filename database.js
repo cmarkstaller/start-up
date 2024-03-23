@@ -65,7 +65,7 @@ async function listUsers() {
 
 async function updateUser(username, goals, friends) {
   userCollection.deleteOne({username: { $eq: username}});
-  createUser(username, goals, friends);
+  createPerson(username, goals, friends);
 }
 
 module.exports = {

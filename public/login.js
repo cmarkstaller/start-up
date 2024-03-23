@@ -8,8 +8,8 @@ async function createUser() {
 }
 
 async function loginOrCreate(endpoint) {
-  const userName = document.querySelector('#username')?.value;
-  const password = document.querySelector('#userpassword')?.value;
+  const userName = document.querySelector('#username').value;
+  const password = document.querySelector('#userpassword').value;
   const response = await fetch(endpoint, {
     method: 'post',
     body: JSON.stringify({ username: userName, password: password }),
@@ -39,7 +39,7 @@ function logout() {
   localStorage.removeItem('username');
   fetch(`/api/auth/logout`, {
     method: 'delete',
-  }).then(() => (window.location.href = '/'));
+  });
 }
 
 async function getUser(username) {
