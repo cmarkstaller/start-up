@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Login form html</title>
-    <script src="person.js"></script>
+    //<script src="person.js"></script>
+    <script src="login.js"></script>
     <link rel="stylesheet" href="styles.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
@@ -20,7 +21,7 @@
             </div>
             
             <div class="input-box">
-                <input type="password" placeholder="Password" required>
+                <input type="password" id="userpassword" placeholder="Password" required>
                 <i class='bx bxs-lock-alt'></i>
             </div>
 
@@ -29,11 +30,24 @@
                 <a href="#">Forgot password?</a>
             </div>
  
-            <button class="btn" type="submit" onclick="login(event)">Login</button>
+            <button class="btn" type="submit" onclick="loginUser(event)">Login</button>
 
             <div class="register-link">
-                <p>Don't have an account? <a href="#">Register</a></p>
-            </div> 
+                <p>Don't have an account? <a href="#" id="register-link">Register</a></p>
+            </div>
+            <script>
+                // Get the link element
+                var registerLink = document.getElementById("register-link");
+            
+                // Add onclick event handler to the link element
+                registerLink.onclick = function(event) {
+                    // Prevent the default behavior of the link
+                    event.preventDefault();
+                    
+                    // Call the register function
+                    createUser();
+                };
+            </script>
         </form>
     </div>
 
