@@ -77,10 +77,34 @@ class Person {
   }
 }
 
+// // Turn two lists into a map
+// async function createMap() {
+//   let keys = await listUsernames();
+//   let values = await listUsers();
+  
+//   if (keys.length !== values.length) {
+//     console.error("Lists must have the same length.");
+//     return null;
+//   }
+
+//   const myMap = new Map();
+
+//   for (let i = 0; i < keys.length; i++) {
+//     myMap.set(keys[i], values[i]);
+//   }
+
+//   return myMap;
+// }
+
 // Turn two lists into a map
 async function createMap() {
-  let keys = await listUsernames();
+  //let keys = await listUsernames();
   let values = await listUsers();
+  let keys = []
+  
+  for (let i = 0; i < values.length; i += 1) {
+    keys.push(values[i].username);
+  }
   
   if (keys.length !== values.length) {
     console.error("Lists must have the same length.");
@@ -139,15 +163,30 @@ async function listUsers() {
   return(personList);
 }
 
-// let nameList = await listUsernames();
+// // let nameList = await listUsernames();
+// async function listUsernames() {
+//   let response = await fetch('/api/listUsernames', {
+//       method: 'GET',
+//       headers: {'content-type': 'application/json'}
+//   });
+
+//   let usernameList = await response.json();
+//   return(usernameList);
+// }
+
 async function listUsernames() {
-  let response = await fetch('/api/listUsernames', {
+  let response = await fetch('/api/listUsers', {
       method: 'GET',
       headers: {'content-type': 'application/json'}
   });
 
-  let usernameList = await response.json();
-  return(usernameList);
+  let userarray = []
+  let personList = await response.json();
+  
+  for (let i = 0; i < personList.length; i += 1) {
+    userarray.push(personList[i].username);
+  }
+  return(userarray);
 }
 
 async function login() {

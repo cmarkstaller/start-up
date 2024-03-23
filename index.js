@@ -168,6 +168,18 @@ secureApiRouter.get('/listUsernames', async (req, res) => {
   res.status(200).send(usernameArray);
 })
 
+// secureApiRouter.get('/listUsernames', async (req, res) => {
+//   //const valuesArray = Array.from(dictionary.values());
+//   const valuesArray = await DB.listUsers();
+
+//   let userArray = [];
+//   for (let i = 0; i < valuesArray.length; i += 1) {
+//     let username = valuesArray[i].username;
+//     userArray.push(username);
+//   }
+//   res.status(200).send(valuesArray);
+// });
+
 // UpdateUser
 secureApiRouter.put('/updateUser', async (req, res) => {
   //dictionary.set(req.body.userName, new Person(req.body.userName, req.body.goals, req.body.friends));
