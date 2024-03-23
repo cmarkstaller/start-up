@@ -102,3 +102,19 @@ Yup, it does that.
 
 ## Your frontend calls your service endpoints
 Yup, we do that too
+
+# Login Startup
+## Supports new user registration
+Yup, a new user can type in a username and password, and then hit register, and then it works
+
+## Supports existing user authentication
+Yup, a preregistered user can type in username and password, and then hit login and it works!
+
+## Stores application data in MongoDB
+Yup, I do this too
+
+## Stores and retrieves credentials in MongoDB
+This part actually works great! i do this too
+
+## Restricts application functionality based upon authentication
+Users can only see their goals and other user's goals when they are logged in
