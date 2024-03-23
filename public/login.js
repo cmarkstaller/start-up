@@ -35,23 +35,23 @@ function play() {
   window.location.href = 'main.html';
 }
 
-function logout() {
+async function logout() {
   localStorage.removeItem('username');
-  fetch(`/api/auth/logout`, {
+  await fetch(`/api/auth/logout`, {
     method: 'delete',
   });
 }
 
-async function getUser(username) {
-  let scores = [];
-  // See if we have a user with the given email.
-  const response = await fetch(`/api/user/${username}`);
-  if (response.status === 200) {
-    return response.json();
-  }
+// async function getUser(username) {
+//   let scores = [];
+//   // See if we have a user with the given email.
+//   const response = await fetch(`/api/user/${username}`);
+//   if (response.status === 200) {
+//     return response.json();
+//   }
 
-  return null;
-}
+//   return null;
+// }
 
 class Person {
   userName;
@@ -167,20 +167,20 @@ async function login() {
   
   // Add a user object to the dictionary if it isn't already in there
   if (!dictionary.has(usernameEl)) {
-      addUser(usernameEl);
+      await addUser(usernameEl);
   }
 
   window.location.href = "main.html";
 }
 
-function populatePerson() {
+async function populatePerson() {
   var username = localStorage.getItem("username");
 
   // Sets the username
   var h1El = document.querySelector('.card.personal h1')
   h1El.textContent = username;
 
-  renderGoals();
+  await renderGoals();
 }
 
 async function renderGoals() {
@@ -228,11 +228,10 @@ async function handleCheckboxChange(event, goal) {
   
   // Assuming userObject.goals is an array and not an object property
   var index = userObject.goals.indexOf(goal);
-  console.log(index);
   if (index !== -1) {
       userObject.goals.splice(index, 1); // Remove the goal from the array
-      updateUser(userObject);
-      renderGoals(); // Update the UI
+      await updateUser(userObject);
+      await renderGoals(); // Update the UI
   }
 }
 
@@ -244,8 +243,8 @@ async function addGoal() {
   const userInput = document.querySelector("#goalInput").value;
 
   userObject.goals.push(userInput);
-  updateUser(userObject);
-  populatePerson();
+  await updateUser(userObject);
+  await populatePerson();
 }
 
 async function addFriend() {
@@ -282,17 +281,17 @@ async function selectFriend(user) {
 
   if (!userObject.friends.includes(user) && user !== username) {
       userObject.friends.push(user);
-      updateUser(userObject);
+      await updateUser(userObject);
   }
-  resetAddFriendCard();
+  await resetAddFriendCard();
 }
 
-function resetAddFriendCard() {
+async function resetAddFriendCard() {
   var parentElement = document.querySelector("#addFriendCard");
   while (parentElement.firstChild) {
       parentElement.removeChild(parentElement.firstChild);
   }
-  displayFriendCards();
+  await displayFriendCards();
 }
 
 async function displayFriendCards() {
@@ -307,7 +306,7 @@ async function displayFriendCards() {
   var userObject = dictionary.get(username);
 
   for (var user of userObject.friends) {
-      displayFriendCard(user);
+      await displayFriendCard(user);
   }
 }
 

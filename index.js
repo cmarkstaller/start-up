@@ -112,16 +112,16 @@ secureApiRouter.use(async (req, res, next) => {
 });
 
 // AddUser
-secureApiRouter.post('/addUser', (req, res) => {
+secureApiRouter.post('/addUser', async (req, res) => {
   dictionary.set(req.body.userName, new Person(req.body.userName, req.body.goals, req.body.friends));
-  DB.createPerson(req.body.userName, req.body.goals, req.body.friends);
+  await DB.createPerson(req.body.userName, req.body.goals, req.body.friends);
   res.status(200).send('Resource updated successfully');
 });
 
 // GetUser
-secureApiRouter.get('/getUser/:username', (req, res) => {
+secureApiRouter.get('/getUser/:username', async (req, res) => {
   const username = req.params.username;
-  const user = DB.getPerson(username);
+  const user = await DB.getPerson(username);
   
   const userInstance = new Person(
     user.username,
@@ -169,10 +169,10 @@ secureApiRouter.get('/listUsernames', async (req, res) => {
 })
 
 // UpdateUser
-secureApiRouter.put('/updateUser', (req, res) => {
+secureApiRouter.put('/updateUser', async (req, res) => {
   //dictionary.set(req.body.userName, new Person(req.body.userName, req.body.goals, req.body.friends));
   //console.log(dictionary);
-  DB.updateUser(req.body.username, req.body.goals, req.body.friends);
+  await DB.updateUser(req.body.username, req.body.goals, req.body.friends);
   res.status(200).send('Resource updated successfully');
 });
 
