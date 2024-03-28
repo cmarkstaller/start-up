@@ -210,13 +210,12 @@ async function login() {
   if (!dictionary.has(usernameEl)) {
       await addUser(usernameEl);
   }
-  
-  configureWebSocket();
 
   window.location.href = "main.html";
 }
 
 async function populatePerson() {
+  
   var username = localStorage.getItem("username");
 
   // Sets the username
@@ -232,7 +231,7 @@ async function renderGoals() {
   var dictionary = await createMap();
   var userObject = dictionary.get(username);
   
-  var goalListEl = document.querySelector('.card.personal .goals');
+  //var goalListEl = document.querySelector('.card.personal .goals');
   var parentElement = document.querySelector(".goalList");
   
   // wipe the goals portion of the html
@@ -288,7 +287,8 @@ async function addGoal() {
   userObject.goals.push(userInput);
   await updateUser(userObject);
   await populatePerson();
-  broadcastEvent({}, UserUpdateEvent, {});
+
+  broadcastEvent(UserUpdateEvent);
 }
 
 async function addFriend() {
@@ -411,37 +411,25 @@ function displayQuote(data) {
   });
 }
 
+let socket;
 function configureWebSocket() {
   const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
-  this.socket = new WebSocket(`${protocol}://${window.location.host}/ws`);
+  socket = new WebSocket(`${protocol}://${window.location.host}/ws`);
 
-  // this.socket.onopen = (event) => {
-  //   this.displayMsg('system', 'game', 'connected');
-  // };
-  // this.socket.onclose = (event) => {
-  //   this.displayMsg('system', 'game', 'disconnected');
-  // };
-
-  this.socket.onmessage = async (event) => {
+  socket.onmessage = async (event) => {
     const msg = JSON.parse(await event.data.text());
+    console.log(msg);
     if (msg.type === UserUpdateEvent) {
       console.log("calling renderGoals() from websocket");
-      await renderGoals();
+      await displayFriendCards();
     }
-    // if (msg.type === GameEndEvent) {
-    //   this.displayMsg('player', msg.from, `scored ${msg.value.score}`);
-    // } 
-    // else if (msg.type === GameStartEvent) {
-    //   this.displayMsg('player', msg.from, `started a new game`);
-    // }
   };
 }
 
-function broadcastEvent(from, type, value) {
+function broadcastEvent(type) {
   const event = {
-      from: from,
-      type: type,
-      value: value,
+      type: type
   };
-  this.socket.send(JSON.stringify(event));
+  socket.send(JSON.stringify(event));
 }
+
