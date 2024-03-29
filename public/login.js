@@ -274,6 +274,7 @@ async function handleCheckboxChange(event, goal) {
       userObject.goals.splice(index, 1); // Remove the goal from the array
       await updateUser(userObject);
       await renderGoals(); // Update the UI
+      broadcastEvent(UserUpdateEvent);
   }
 }
 
