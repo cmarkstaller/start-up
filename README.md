@@ -118,3 +118,16 @@ This part actually works great! i do this too
 
 ## Restricts application functionality based upon authentication
 Users can only see their goals and other user's goals when they are logged in
+
+# Startup Websocket
+## Backend listens for WebSocket connection
+Does this through peerProxy
+
+## Frontend makes WebSocket connection
+login.js makes a connection when and is called at the same time as populate person in the main.html
+
+## Data sent over WebSocket connection
+A message is sent over websocket telling the page to refresh the friend goal cards
+
+## WebSocket data displayed in the application interface
+Whenever the friend of a user updates their goals, they are automatically updated on their page.
