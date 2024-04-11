@@ -11,6 +11,9 @@
     "nanoid": "^3.3.7",
     "picocolors": "^1.0.0",
     "postcss": "^8.4.38",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.22.3",
     "rollup": "^4.14.1",
     "source-map-js": "^1.2.0"
   },
