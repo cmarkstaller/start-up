@@ -1,0 +1,25 @@
+{
+  "devDependencies": {
+    "vite": "^5.2.8"
+  },
+  "name": "start-up",
+  "description": "___\r ## Elevator Pitch\r *Everyone sets goals, but how often do we actually achieve those goals that we set. No matter how well intentioned we are, or what goal framework we are using, the rubber never seems to meet the road. Goaly is a webservice that can change that. By taking advantage of accountability, Goaly allows your friends to see your goals and help motivate you to achieve them. Goaly, like most goal setting applications, allows you to see your own goals in a neat and organized way, helping you to keep track of what is most important. The power of Goaly comes in being able to add friends to your main dashboard, and track their goals. You can even help motivate them by sending them message when a goal has been on the dashboard for a while*",
+  "version": "1.0.0",
+  "main": "login.js",
+  "dependencies": {
+    "esbuild": "^0.20.2",
+    "nanoid": "^3.3.7",
+    "picocolors": "^1.0.0",
+    "postcss": "^8.4.38",
+    "rollup": "^4.14.1",
+    "source-map-js": "^1.2.0"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
