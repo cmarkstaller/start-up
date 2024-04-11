@@ -10,13 +10,7 @@ export function Login() {
     const navigate = useNavigate();
 
     async function loginOrCreate(endpoint, event) {
-        //event.preventDefault();
-        
-        // const username = document.querySelector('#username').value;
-        // const password = document.querySelector('#userpassword').value;
-        console.log(username);
-        console.log(password);
-
+        event.preventDefault();
         const response = await fetch(endpoint, {
             method: 'post',
             body: JSON.stringify({ username: username, password: password }),
@@ -26,10 +20,9 @@ export function Login() {
         });
 
         if (response.ok) {
+            console.log("ok");
             localStorage.setItem('username', username);
             navigate('/main');
-            //login();
-            // window.location.href = 'main.html';
         
         } else {
             const body = await response.json();
@@ -41,52 +34,52 @@ export function Login() {
     };
 
   return (
-<body>
-    <script>logout()</script>
-    <div className="wrapper">
-        <form>
-            <h1>Login</h1>
-            <div className="input-box">
-                <input type="text" id="username" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} required />
-                <i className='bx bxs-user'></i>
-            </div>
-            
-            <div className="input-box">
-                <input type="password" id="userpassword" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-                <i className='bx bxs-lock-alt'></i>
-            </div>
+    <div className="body">
+        <script>logout()</script>
+        <div className="wrapper">
+            <form>
+                <h1>Login</h1>
+                <div className="input-box">
+                    <input type="text" id="username" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} required />
+                    <i className='bx bxs-user'></i>
+                </div>
+                
+                <div className="input-box">
+                    <input type="password" id="userpassword" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+                    <i className='bx bxs-lock-alt'></i>
+                </div>
 
-            <div className="remember-forgot">
-                <label><input type="checkbox" /> Remember me</label>
-                <a href="#">Forgot password?</a>
-            </div>
+                <div className="remember-forgot">
+                    <label><input type="checkbox" /> Remember me</label>
+                    <a href="#">Forgot password?</a>
+                </div>
 
-            <button className="btn" type="submit" onClick={() => loginOrCreate(`/api/auth/login`, event)}>Login</button>
+                <button className="btn" type="submit" onClick={() => loginOrCreate(`/api/auth/login`, event)}>Login</button>
 
-            <div className="register-link">
-                <p>Don't have an account? <a href="#" id="register-link">Register</a></p>
-            </div>
-            {/* <script>
-                // Get the link element
-                var registerLink = document.getElementById("register-link");
-            
-                // Add onclick event handler to the link element
-                registerLink.onclick = function(event) {
-                    // Prevent the default behavior of the link
-                    event.preventDefault();
-                    
-                    // Call the register function
-                    createUser();
-                };
-            </script> */}
-        </form>
+                <div className="register-link">
+                    <p>Don't have an account? <a href="#" id="register-link">Register</a></p>
+                </div>
+                {/* <script>
+                    // Get the link element
+                    var registerLink = document.getElementById("register-link");
+                
+                    // Add onclick event handler to the link element
+                    registerLink.onclick = function(event) {
+                        // Prevent the default behavior of the link
+                        event.preventDefault();
+                        
+                        // Call the register function
+                        createUser();
+                    };
+                </script> */}
+            </form>
+        </div>
+
+        <footer>
+            <p>Christopher Markstaller</p>
+            <a href="https://github.com/cmarkstaller/start-up">GitHub</a>
+        </footer>
+        
     </div>
-
-    <footer>
-        <p>Christopher Markstaller</p>
-        <a href="https://github.com/cmarkstaller/start-up">GitHub</a>
-    </footer>
-    
-</body>
   );
 }

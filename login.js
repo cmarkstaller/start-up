@@ -22,7 +22,8 @@ async function loginOrCreate(endpoint) {
 
   if (response.ok) {
     localStorage.setItem('username', userName);
-    login();
+    
+    //login();
     // window.location.href = 'main.html';
   } else {
     const body = await response.json();
