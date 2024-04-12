@@ -8,20 +8,31 @@ export function Main() {
 
     const username  = localStorage.getItem("username");
 
-    // const [dictionary, updateDictionary] = React.useState('');
+    // const [dictionary, updateDictionary] = React.useState(createMap());
+    // const [dictionary, updateDictionary] = React.useState(createMap());
+    // const dictionary = createMap();
 
-    // const handleInputChange = (event) => {
-    //     setUserInput(event.target.value);
-    // }
+    // React.useEffect(() => {
+    //     console.log("inside use effect");
+    //     updateDictionary(createMap());
+    // }, []);
 
+    const [dictionary, updateDictionary] = useState(null); // Initialize with null
+
+    React.useEffect(() => {
+        console.log("inside use effect");
+        // Fetch dictionary when component mounts
+        async function fetchDictionary() {
+            const map = await createMap();
+            updateDictionary(map);
+        }
+        fetchDictionary();
+    }, []);
+    
     const handleLogout = () => {
         logout();
         navigate('/login');
     };
-
-    function addGoal() {
-        console.log(userInput);
-    }
 
     function addFriend() {
         console.log("adding friend");
@@ -65,18 +76,18 @@ export function Main() {
         let keys = []
         
         for (let i = 0; i < values.length; i += 1) {
-        keys.push(values[i].username);
+            keys.push(values[i].username);
         }
         
         if (keys.length !== values.length) {
-        console.error("Lists must have the same length.");
-        return null;
+            console.error("Lists must have the same length.");
+            return null;
         }
     
         const myMap = new Map();
     
         for (let i = 0; i < keys.length; i++) {
-        myMap.set(keys[i], values[i]);
+            myMap.set(keys[i], values[i]);
         }
     
         return myMap;
@@ -115,6 +126,7 @@ export function Main() {
     // }
     
     // let personList = await listUsers();
+    
     async function listUsers() {
         let response = await fetch('/api/listUsers', {
             method: 'GET',
@@ -125,44 +137,33 @@ export function Main() {
         return(personList);
     }
     
-    async function listUsernames() {
-        let response = await fetch('/api/listUsers', {
-            method: 'GET',
-            headers: {'content-type': 'application/json'}
-        });
+    // async function listUsernames() {
+    //     let response = await fetch('/api/listUsers', {
+    //         method: 'GET',
+    //         headers: {'content-type': 'application/json'}
+    //     });
     
-        let userarray = []
-        let personList = await response.json();
+    //     let userarray = []
+    //     let personList = await response.json();
         
-        for (let i = 0; i < personList.length; i += 1) {
-        userarray.push(personList[i].username);
-        }
-        return(userarray);
-    }
+    //     for (let i = 0; i < personList.length; i += 1) {
+    //     userarray.push(personList[i].username);
+    //     }
+    //     return(userarray);
+    // }
 
-    function updateGoalse(userGoals) {
-        for (const [i, goal] of userGoals.entries()) {
-            goals.push(
-                <label key={i}>
-                    <input type="checkbox" />
-                    <span></span>
-                    <p>{goal}</p>
-                </label>
-            );
-        } 
-    }
 
     function PopulateGoalList() {
-        console.log("hey!");
-        // console.log("here is what your dictionary looks like");
-        // console.log(dictionary);
-        // var userObject = dictionary.get(username);
+        console.log("here is what your dictionary looks like");
+        console.log(dictionary);
+        var userObject = dictionary.get(username);
 
-        // console.log(userObject);
+        console.log(userObject);
+        console.log(userObject.goals);
             // for (var goal of userObject.goals) {
             //     console.log(goal);
         
-        const userGoals = ["run", "eat", "sleep"];
+        const userGoals = userObject.goals;
         const goals = [];
         for (const [i, goal] of userGoals.entries()) {
             goals.push(
@@ -178,13 +179,22 @@ export function Main() {
 
     function PersonalCard() {
         const [goalInput, setGoalInput] = useState('');
+
+        function addGoal() {
+            console.log(goalInput);
+        }
         
         return (
             <div className="card personal">
                 <h1>{username}</h1>
                 <div className="goals">  
                     <div className="goalList">
-                        <PopulateGoalList />
+                        {/* <PopulateGoalList /> */}
+                        {dictionary === null ? (
+                            <p>Loading...</p> // Render loading message
+                        ) : (
+                            <PopulateGoalList />
+                        )}
                         
                     </div>
                     <div className="addGoal"> 
