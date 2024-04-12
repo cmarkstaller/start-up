@@ -8,6 +8,13 @@ export function Main() {
 
     const username  = localStorage.getItem("username");
 
+    const [dictionary, updateDictionary] = React.useState(createMap());
+
+    // React.useEffect(() => {
+    //     var map = createMap();
+    //     updateDictionary(map);
+    // }, []);
+
     const handleLogout = () => {
         logout();
         navigate('/login');
@@ -135,29 +142,26 @@ export function Main() {
     }
 
     function PopulateGoalList() {
-        return(
-            <label>
-                <input type="checkbox" />
-                <span></span>
-                <p>here is my goal</p>
-            </label>
-        );
+        console.log("here is what your dictionary looks like");
+        console.log(dictionary);
+        // var userObject = dictionary.get(username);
+
+        // console.log(userObject);
+            // for (var goal of userObject.goals) {
+            //     console.log(goal);
         
-        // try {
-        //     console.log("yup");
-        //     var dictionary = await createMap();
-        //     var userObject = dictionary.get(username);
-        //     for (var goal of userObject.goals) {
-        //         console.log(goal);
-        //     }
-        //     return (
-        //         <div>Here is my list</div>
-        //     );
-        // } catch (error) {
-        //     console.error("Error fetching data:", error);
-        //     // Return an error message or handle the error gracefully
-        //     return <div>Error fetching data</div>;
-        // }    
+        const userGoals = ["run", "eat", "sleep"];
+        const goals = [];
+        for (const [i, goal] of userGoals.entries()) {
+            goals.push(
+                <label key={i}>
+                    <input type="checkbox" />
+                    <span></span>
+                    <p>{goal}</p>
+                </label>
+            );
+        }    
+        return(goals); 
     }
 
     function PersonalCard() {
@@ -240,9 +244,8 @@ export function Main() {
             
             <PopulateFriend />
             
-
             <div className="card addfriend">
-                <button className="btn" onClick={addFriend()}><i className='bx bx-plus-circle'></i></button>
+                <button className="btn" onClick={() => addFriend()}><i className='bx bx-plus-circle'></i></button>
                 <p>Add Friend</p>
             </div>
 
