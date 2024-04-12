@@ -22,7 +22,7 @@ async function loginOrCreate(endpoint) {
 
   if (response.ok) {
     localStorage.setItem('username', userName);
-    
+
     //login();
     // window.location.href = 'main.html';
   } else {
@@ -37,7 +37,7 @@ async function loginOrCreate(endpoint) {
 function play() {
   window.location.href = 'main.html';
 }
-
+ 
 async function logout() {
   localStorage.removeItem('username');
   await fetch(`/api/auth/logout`, {
