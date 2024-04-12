@@ -18,6 +18,7 @@ export function Main() {
     // }, []);
 
     const [dictionary, updateDictionary] = useState(null); // Initialize with null
+    var [rerender, updateRender] = useState(0);
 
     React.useEffect(() => {
         console.log("inside use effect");
@@ -27,7 +28,7 @@ export function Main() {
             updateDictionary(map);
         }
         fetchDictionary();
-    }, []);
+    }, [rerender]);
     
     const handleLogout = () => {
         logout();
@@ -73,11 +74,12 @@ export function Main() {
     async function createMap() {
         //let keys = await listUsernames();
         let values = await listUsers();
-        let keys = []
+        let keys = await listUsernames();
+        // let keys = []
         
-        for (let i = 0; i < values.length; i += 1) {
-            keys.push(values[i].username);
-        }
+        // for (let i = 0; i < values.length; i += 1) {
+        //     keys.push(values[i].username);
+        // }
         
         if (keys.length !== values.length) {
             console.error("Lists must have the same length.");
@@ -117,13 +119,13 @@ export function Main() {
     }
     
     // updateUser(myUser);
-    // async function updateUser(myUser) {
-    //     fetch('/api/updateUser', {
-    //         method: 'PUT',
-    //         headers: {'content-type': 'application/json'},
-    //         body: JSON.stringify(myUser)
-    //     });
-    // }
+    async function updateUser(myUser) {
+        fetch('/api/updateUser', {
+            method: 'PUT',
+            headers: {'content-type': 'application/json'},
+            body: JSON.stringify(myUser)
+        });
+    }
     
     // let personList = await listUsers();
     
@@ -137,31 +139,24 @@ export function Main() {
         return(personList);
     }
     
-    // async function listUsernames() {
-    //     let response = await fetch('/api/listUsers', {
-    //         method: 'GET',
-    //         headers: {'content-type': 'application/json'}
-    //     });
+    async function listUsernames() {
+        let response = await fetch('/api/listUsers', {
+            method: 'GET',
+            headers: {'content-type': 'application/json'}
+        });
     
-    //     let userarray = []
-    //     let personList = await response.json();
+        let userarray = []
+        let personList = await response.json();
         
-    //     for (let i = 0; i < personList.length; i += 1) {
-    //     userarray.push(personList[i].username);
-    //     }
-    //     return(userarray);
-    // }
+        for (let i = 0; i < personList.length; i += 1) {
+        userarray.push(personList[i].username);
+        }
+        return(userarray);
+    }
 
 
     function PopulateGoalList() {
-        console.log("here is what your dictionary looks like");
-        console.log(dictionary);
         var userObject = dictionary.get(username);
-
-        console.log(userObject);
-        console.log(userObject.goals);
-            // for (var goal of userObject.goals) {
-            //     console.log(goal);
         
         const userGoals = userObject.goals;
         const goals = [];
@@ -181,7 +176,10 @@ export function Main() {
         const [goalInput, setGoalInput] = useState('');
 
         function addGoal() {
-            console.log(goalInput);
+            var myUser = dictionary.get(username);
+            myUser.goals.push(goalInput);
+            updateUser(myUser);
+            updateRender(rerender += 1);
         }
         
         return (
@@ -189,13 +187,12 @@ export function Main() {
                 <h1>{username}</h1>
                 <div className="goals">  
                     <div className="goalList">
-                        {/* <PopulateGoalList /> */}
-                        {dictionary === null ? (
+                        {/* {dictionary === null ? (
                             <p>Loading...</p> // Render loading message
                         ) : (
                             <PopulateGoalList />
-                        )}
-                        
+                        )} */}
+                        <PopulateGoalList />
                     </div>
                     <div className="addGoal"> 
                         <div id="addGoalInput">
@@ -220,35 +217,39 @@ export function Main() {
             </div>
         );
     }
-    function PopulateFriendsGoals() {
-        return (
-            <div className="goals">
-                <label>
+    function PopulateFriendsGoals(props) {
+        var friendObject = dictionary.get(props.friendProp);
+        
+        const friendGoals = friendObject.goals;
+        const goals = [];
+        for (const [i, goal] of friendGoals.entries()) {
+            goals.push(
+                <label key={i}>
                     <input type="checkbox" />
                     <span></span>
-                    <p>shaboy</p>
+                    <p>{goal}</p>
                 </label>
-                <label>
-                    <input type="checkbox" />
-                    <span></span>
-                    <p>Goal 2</p>
-                </label>
-                <label>
-                    <input type="checkbox" />
-                    <span></span>
-                    <p>Goal 3</p>
-                </label>
-            </div>       
-        );
+            );
+        }    
+        return(goals);
     }
 
     function PopulateFriend() {
-        return (
-            <div className="card deleteFriend">
-                <h1>FriendName</h1>
-                <PopulateFriendsGoals />
-            </div>
-        );
+        var myUser = dictionary.get(username);
+        
+        const userFriends = myUser.friends;
+        const friends = [];
+        for (const [i, friend] of userFriends.entries()) {
+            friends.push(
+                <div className="card deleteFriend" key={i}>
+                    <h1>{friend}</h1>
+                        <div className="goals">
+                        <PopulateFriendsGoals friendProp={friend}/>
+                        </div>
+                </div>
+            );
+        }    
+        return(friends);
     }
 
     return (
@@ -263,11 +264,21 @@ export function Main() {
         </aside>
 
         <div className="container">
-            <PersonalCard />
+            {/* <PersonalCard /> */}
+            {dictionary === null ? (
+                <p>Loading...</p> // Render loading message
+                ) : (
+                <PersonalCard />
+            )}            
             
             <PopulateQuoteCard />
             
-            <PopulateFriend />
+            {/* <PopulateFriend /> */}
+            {dictionary === null ? (
+                <p>Loading...</p> // Render loading message
+                ) : (
+                <PopulateFriend />
+            )}  
             
             <div className="card addfriend">
                 <button className="btn" onClick={() => addFriend()}><i className='bx bx-plus-circle'></i></button>
