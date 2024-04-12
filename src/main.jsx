@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import './mainstyles.css';
@@ -8,12 +8,11 @@ export function Main() {
 
     const username  = localStorage.getItem("username");
 
-    const [dictionary, updateDictionary] = React.useState(createMap());
+    // const [dictionary, updateDictionary] = React.useState('');
 
-    // React.useEffect(() => {
-    //     var map = createMap();
-    //     updateDictionary(map);
-    // }, []);
+    // const handleInputChange = (event) => {
+    //     setUserInput(event.target.value);
+    // }
 
     const handleLogout = () => {
         logout();
@@ -21,7 +20,7 @@ export function Main() {
     };
 
     function addGoal() {
-        console.log("adding goal");
+        console.log(userInput);
     }
 
     function addFriend() {
@@ -107,13 +106,13 @@ export function Main() {
     }
     
     // updateUser(myUser);
-    async function updateUser(myUser) {
-        fetch('/api/updateUser', {
-            method: 'PUT',
-            headers: {'content-type': 'application/json'},
-            body: JSON.stringify(myUser)
-        });
-    }
+    // async function updateUser(myUser) {
+    //     fetch('/api/updateUser', {
+    //         method: 'PUT',
+    //         headers: {'content-type': 'application/json'},
+    //         body: JSON.stringify(myUser)
+    //     });
+    // }
     
     // let personList = await listUsers();
     async function listUsers() {
@@ -141,9 +140,22 @@ export function Main() {
         return(userarray);
     }
 
+    function updateGoalse(userGoals) {
+        for (const [i, goal] of userGoals.entries()) {
+            goals.push(
+                <label key={i}>
+                    <input type="checkbox" />
+                    <span></span>
+                    <p>{goal}</p>
+                </label>
+            );
+        } 
+    }
+
     function PopulateGoalList() {
-        console.log("here is what your dictionary looks like");
-        console.log(dictionary);
+        console.log("hey!");
+        // console.log("here is what your dictionary looks like");
+        // console.log(dictionary);
         // var userObject = dictionary.get(username);
 
         // console.log(userObject);
@@ -165,16 +177,19 @@ export function Main() {
     }
 
     function PersonalCard() {
+        const [goalInput, setGoalInput] = useState('');
+        
         return (
             <div className="card personal">
                 <h1>{username}</h1>
                 <div className="goals">  
                     <div className="goalList">
                         <PopulateGoalList />
+                        
                     </div>
                     <div className="addGoal"> 
                         <div id="addGoalInput">
-                            <input type="text" id="goalInput" placeholder="Add Goal" />
+                            <input type="text" id="goalInput" placeholder="Add Goal" value={goalInput} onChange={(e) => setGoalInput(e.target.value)} />
                         </div>
                         
                         <label id="addGoalButton">
