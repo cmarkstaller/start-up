@@ -13,6 +13,10 @@ export function Main() {
         navigate('/login');
     };
 
+    function addGoal() {
+        console.log("adding goal");
+    }
+
     class Person {
         userName;
         goals;
@@ -165,12 +169,46 @@ export function Main() {
                             <input type="text" id="goalInput" placeholder="Add Goal" />
                         </div>
                         
-                        {/* <label id="addGoalButton">
-                            <button className="btn" onClick="addGoal()"><i className='bx bx-plus-circle'></i></button>
-                        </label> */}
-                    </div>    
+                        <label id="addGoalButton">
+                            <button className="btn" onClick={() => addGoal()}><i className='bx bx-plus-circle'></i></button>
+                        </label>
+                    </div>
                 </div>
-                {/* <script>populatePerson(); configureWebSocket();</script> */}
+                {/* configureWebSocket();</script> */}
+            </div>
+        );
+    }
+
+    function PopulateQuoteCard() {
+        return (
+            <div id="fetchQuote" className="card quote-card">
+                <p className="quote">here is my quote</p>
+                <p className="person">Here is the author</p>
+            </div>
+        );
+    }
+
+    function PopulateFriends() {
+        return (
+            <div className="card deleteFriend">
+                <h1>Name</h1>
+                <div className="goals">
+                    <label>
+                        <input type="checkbox" />
+                        <span></span>
+                        <p>shaboy</p>
+                    </label>
+                    <label>
+                        <input type="checkbox" />
+                        <span></span>
+                        <p>Goal 2</p>
+                    </label>
+                    <label>
+                        <input type="checkbox" />
+                        <span></span>
+                        <p>Goal 3</p>
+                    </label>
+                </div>
             </div>
         );
     }
@@ -188,51 +226,15 @@ export function Main() {
 
         <div className="container">
             <PersonalCard />
-            {/* <div className="card personal">
-                <h1>Username</h1>
-                <div className="goals">  
-                    <div className="goalList">
-                    </div>
-                    <div className="addGoal"> 
-                        <div id="addGoalInput">
-                            <input type="text" id="goalInput" placeholder="Add Goal" />
-                        </div>
-                        
-                        <label id="addGoalButton">
-                            <button className="btn" onClick="addGoal()"><i className='bx bx-plus-circle'></i></button>
-                        </label>
-                    </div>    
-                </div>
-                <script>populatePerson(); configureWebSocket();</script>
-            </div> */}
-
-            {/* <div id="fetchQuote" className="card quote-card">
-                <script>displayQuote()</script>
-            </div>
-            <div className="card deleteFriend">
-                <h1>Name</h1>
-                <div className="goals">
-                    <label>
-                        <input type="checkbox" />
-                        <span></span>
-                        <p>Goal 1</p>
-                    </label>
-                    <label>
-                        <input type="checkbox" />
-                        <span></span>
-                        <p>Goal 2</p>
-                    </label>
-                    <label>
-                        <input type="checkbox" />
-                        <span></span>
-                        <p>Goal 3</p>
-                    </label>
-                </div>
-            </div>
-            <script>displayFriendCards()</script>
+            
+            <PopulateQuoteCard />
+            
+            <PopulateFriends />
+            
+            {/* <script>displayFriendCards()</script> */}
             
 
-            <div className="card addfriend">
+            {/* <div className="card addfriend">
                 <button className="btn" onClick="addFriend()"><i className='bx bx-plus-circle'></i></button>
                 <p>Add Friend</p>
             </div>
