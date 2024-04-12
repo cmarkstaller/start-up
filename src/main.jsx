@@ -17,6 +17,10 @@ export function Main() {
         console.log("adding goal");
     }
 
+    function addFriend() {
+        console.log("adding friend");
+    }
+
     class Person {
         userName;
         goals;
@@ -187,28 +191,33 @@ export function Main() {
             </div>
         );
     }
+    function PopulateFriendsGoals() {
+        return (
+            <div className="goals">
+                <label>
+                    <input type="checkbox" />
+                    <span></span>
+                    <p>shaboy</p>
+                </label>
+                <label>
+                    <input type="checkbox" />
+                    <span></span>
+                    <p>Goal 2</p>
+                </label>
+                <label>
+                    <input type="checkbox" />
+                    <span></span>
+                    <p>Goal 3</p>
+                </label>
+            </div>       
+        );
+    }
 
-    function PopulateFriends() {
+    function PopulateFriend() {
         return (
             <div className="card deleteFriend">
-                <h1>Name</h1>
-                <div className="goals">
-                    <label>
-                        <input type="checkbox" />
-                        <span></span>
-                        <p>shaboy</p>
-                    </label>
-                    <label>
-                        <input type="checkbox" />
-                        <span></span>
-                        <p>Goal 2</p>
-                    </label>
-                    <label>
-                        <input type="checkbox" />
-                        <span></span>
-                        <p>Goal 3</p>
-                    </label>
-                </div>
+                <h1>FriendName</h1>
+                <PopulateFriendsGoals />
             </div>
         );
     }
@@ -229,18 +238,16 @@ export function Main() {
             
             <PopulateQuoteCard />
             
-            <PopulateFriends />
-            
-            {/* <script>displayFriendCards()</script> */}
+            <PopulateFriend />
             
 
-            {/* <div className="card addfriend">
-                <button className="btn" onClick="addFriend()"><i className='bx bx-plus-circle'></i></button>
+            <div className="card addfriend">
+                <button className="btn" onClick={addFriend()}><i className='bx bx-plus-circle'></i></button>
                 <p>Add Friend</p>
             </div>
 
             <div className="card" id="addFriendCard">
-            </div> */}
+            </div>
         </div>
     </div>
   );
