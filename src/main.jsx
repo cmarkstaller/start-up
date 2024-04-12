@@ -7,9 +7,16 @@ export function Main() {
     const navigate = useNavigate();
 
     const handleLogout = () => {
-        // Perform logout logic if needed
+        logout();
         navigate('/login');
     };
+
+    async function logout() {
+        localStorage.removeItem('username');
+        await fetch(`/api/auth/logout`, {
+          method: 'delete',
+        });
+      }
 
   return (
     <div className="mainBody">
@@ -34,7 +41,7 @@ export function Main() {
                         </div>
                         
                         <label id="addGoalButton">
-                            <button className="btn" onclick="addGoal()"><i className='bx bx-plus-circle'></i></button>
+                            <button className="btn" onClick="addGoal()"><i className='bx bx-plus-circle'></i></button>
                         </label>
                     </div>    
                 </div>
@@ -68,7 +75,7 @@ export function Main() {
             
 
             <div className="card addfriend">
-                <button className="btn" onclick="addFriend()"><i className='bx bx-plus-circle'></i></button>
+                <button className="btn" onClick="addFriend()"><i className='bx bx-plus-circle'></i></button>
                 <p>Add Friend</p>
             </div>
 

@@ -1,6 +1,6 @@
 //import React from 'react';
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState} from 'react';
+import {Link, useNavigate } from 'react-router-dom';
 
 import './styles.css';
 
@@ -8,6 +8,10 @@ export function Login() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
+    
+    const handleRegister = () => {
+        loginOrCreate(`/api/auth/create`, event)
+    };
 
     async function loginOrCreate(endpoint, event) {
         event.preventDefault();
@@ -57,21 +61,9 @@ export function Login() {
                 <button className="btn" type="submit" onClick={() => loginOrCreate(`/api/auth/login`, event)}>Login</button>
 
                 <div className="register-link">
-                    <p>Don't have an account? <a href="#" id="register-link">Register</a></p>
+                    {/* <p>Don't have an account? <a href="#" id="register-link">Register</a></p> */}
+                    <p>Don't have an account? <Link to="/" onClick={handleRegister} id="register-link">Register</Link></p>
                 </div>
-                {/* <script>
-                    // Get the link element
-                    var registerLink = document.getElementById("register-link");
-                
-                    // Add onclick event handler to the link element
-                    registerLink.onclick = function(event) {
-                        // Prevent the default behavior of the link
-                        event.preventDefault();
-                        
-                        // Call the register function
-                        createUser();
-                    };
-                </script> */}
             </form>
         </div>
 
