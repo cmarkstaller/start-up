@@ -1,27 +1,32 @@
 import React, { useState} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { GameNotifier } from './gameNotifier.js';
 
 import './mainstyles.css';
 
 export function Main() {
+    
     const navigate = useNavigate();
 
     const username  = localStorage.getItem("username");
-
-    // const [dictionary, updateDictionary] = React.useState(createMap());
-    // const [dictionary, updateDictionary] = React.useState(createMap());
-    // const dictionary = createMap();
-
-    // React.useEffect(() => {
-    //     console.log("inside use effect");
-    //     updateDictionary(createMap());
-    // }, []);
 
     const [dictionary, updateDictionary] = useState(null); // Initialize with null
     var [rerender, updateRender] = useState(0);
 
     React.useEffect(() => {
-        console.log("inside use effect");
+        GameNotifier.addHandler(handleGameEvent);
+
+        return () => {
+        GameNotifier.removeHandler(handleGameEvent);
+        };
+    });
+
+    React.useEffect(() => {
+        console.log("no parameters use effect");
+    }, []);
+    
+    React.useEffect(() => {
+        console.log("inside dictionary use effect");
         // Fetch dictionary when component mounts
         async function fetchDictionary() {
             const map = await createMap();
@@ -29,7 +34,11 @@ export function Main() {
         }
         fetchDictionary();
     }, [rerender]);
-    
+
+    function handleGameEvent(event) {
+        updateRender(rerender += 1);
+    }
+
     const handleLogout = () => {
         logout();
         navigate('/login');
@@ -83,16 +92,18 @@ export function Main() {
         
         if (keys.length !== values.length) {
             console.error("Lists must have the same length.");
-            return null;
+            return(createMap());
         }
     
-        const myMap = new Map();
-    
-        for (let i = 0; i < keys.length; i++) {
-            myMap.set(keys[i], values[i]);
-        }
-    
-        return myMap;
+        else {
+            const myMap = new Map();
+        
+            for (let i = 0; i < keys.length; i++) {
+                myMap.set(keys[i], values[i]);
+            }
+        
+            return myMap;
+        }    
     }
     
     // addUser(usernameEl);
@@ -154,7 +165,6 @@ export function Main() {
         return(userarray);
     }
 
-
     function PopulateGoalList() {
         var userObject = dictionary.get(username);
         
@@ -180,6 +190,7 @@ export function Main() {
             myUser.goals.push(goalInput);
             updateUser(myUser);
             updateRender(rerender += 1);
+            GameNotifier.broadcastEvent("hooray", "I want to", "kiss strawberries");
         }
         
         return (
@@ -204,7 +215,6 @@ export function Main() {
                         </label>
                     </div>
                 </div>
-                {/* configureWebSocket();</script> */}
             </div>
         );
     }
@@ -284,7 +294,6 @@ export function Main() {
                 <button className="btn" onClick={() => addFriend()}><i className='bx bx-plus-circle'></i></button>
                 <p>Add Friend</p>
             </div>
-
             <div className="card" id="addFriendCard">
             </div>
         </div>
