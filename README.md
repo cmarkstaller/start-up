@@ -131,3 +131,16 @@ A message is sent over websocket telling the page to refresh the friend goal car
 
 ## WebSocket data displayed in the application interface
 Whenever the friend of a user updates their goals, they are automatically updated on their page.
+
+# Startup React
+## Bundled using Vite
+I am going to do this, yup, by the time you are reading it, twill be done.
+
+## Multiple functional react components
+I've got a million.
+
+## React router
+My router switches between my main page and login page.
+
+## React hooks
+I also have about two million of these.

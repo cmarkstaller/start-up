@@ -8,7 +8,7 @@
 }
 
 .mainBody {
-    background: url('whitemountains.jpg') fixed;
+    background: url('/whitemountains.jpg') fixed;
     background-size: cover;
     background-position: center;
 }
