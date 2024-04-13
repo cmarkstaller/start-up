@@ -135,6 +135,9 @@ export function Main() {
             method: 'PUT',
             headers: {'content-type': 'application/json'},
             body: JSON.stringify(myUser)
+        }).then(() => {
+            updateRender(rerender += 1);
+            GameNotifier.broadcastEvent("hooray", "I want to", "kiss strawberries");
         });
     }
     
@@ -165,21 +168,51 @@ export function Main() {
         return(userarray);
     }
 
+    // function PopulateGoalList() {
+    //     var userObject = dictionary.get(username);
+        
+    //     const userGoals = userObject.goals;
+    //     const goals = [];
+    //     for (const [i, goal] of userGoals.entries()) {
+    //         goals.push(
+    //             <label key={i}>
+    //                 <input type="checkbox"/>
+    //                 <span></span>
+    //                 <p>{goal}</p>
+    //             </label>
+    //         );
+    //     }    
+    //     return(goals); 
+    // }
+
     function PopulateGoalList() {
         var userObject = dictionary.get(username);
         
         const userGoals = userObject.goals;
-        const goals = [];
-        for (const [i, goal] of userGoals.entries()) {
-            goals.push(
-                <label key={i}>
-                    <input type="checkbox" />
-                    <span></span>
-                    <p>{goal}</p>
-                </label>
-            );
-        }    
-        return(goals); 
+    
+        const handleCheckboxChange = (index) => {
+            // Create a copy of the goals array
+            const updatedGoals = [...userGoals];
+            // Remove the goal at the specified index
+            updatedGoals.splice(index, 1);
+            // Update the dictionary with the updated goals
+            userObject.goals = updatedGoals;
+            updateUser(userObject);
+            
+            // Update the state to trigger a re-render
+            // updateDictionary(new Map(dictionary)); // Trigger re-render by creating a new Map instance
+        };
+    
+        return userGoals.map((goal, index) => (
+            <label key={index}>
+                <input 
+                    type="checkbox" 
+                    onChange={() => handleCheckboxChange(index)} // Call the handler with the index
+                />
+                <span></span>
+                <p>{goal}</p>
+            </label>
+        ));
     }
 
     function PersonalCard() {
@@ -189,8 +222,8 @@ export function Main() {
             var myUser = dictionary.get(username);
             myUser.goals.push(goalInput);
             updateUser(myUser);
-            updateRender(rerender += 1);
-            GameNotifier.broadcastEvent("hooray", "I want to", "kiss strawberries");
+            //updateRender(rerender += 1);
+            // GameNotifier.broadcastEvent("hooray", "I want to", "kiss strawberries");
         }
         
         return (
