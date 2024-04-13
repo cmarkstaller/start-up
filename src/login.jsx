@@ -14,6 +14,7 @@ export function Login() {
     };
 
     async function loginOrCreate(endpoint, event) {
+        
         event.preventDefault();
         const response = await fetch(endpoint, {
             method: 'post',

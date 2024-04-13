@@ -12,6 +12,8 @@ export function Main() {
 
     const [dictionary, updateDictionary] = useState(null); // Initialize with null
     var [rerender, updateRender] = useState(0);
+    const [quote, setQuote] = React.useState('Loading...');
+    const [quoteAuthor, setQuoteAuthor] = React.useState('unknown');
 
     React.useEffect(() => {
         GameNotifier.addHandler(handleGameEvent);
@@ -20,19 +22,50 @@ export function Main() {
         GameNotifier.removeHandler(handleGameEvent);
         };
     });
-
-    React.useEffect(() => {
-        console.log("no parameters use effect");
-    }, []);
     
+    React.useEffect(() => {
+        fetch('https://api.quotable.io/random')
+        .then((response) => response.json())
+        .then((data) => {
+        setQuote(data.content);
+        setQuoteAuthor(data.author);
+        })
+        .catch();
+    }, []);
+
+    var firstTime = true;
     React.useEffect(() => {
         console.log("inside dictionary use effect");
         // Fetch dictionary when component mounts
+        async function checkAddUser() {
+            var dict = await createMap();
+            const keysArray1 = [...dict.keys()];
+            console.log(keysArray1);
+            if (!keysArray1.includes(username)) {
+                await addUser(username);
+                console.log("user not added");
+            }
+            return;
+        }
+        
         async function fetchDictionary() {
             const map = await createMap();
             updateDictionary(map);
         }
-        fetchDictionary();
+        
+        async function both() {
+            await checkAddUser();
+            await fetchDictionary();
+            firstTime = false;
+        }
+        if (firstTime) {
+            both();
+        }
+
+        else {
+            fetchDictionary();
+        }    
+
     }, [rerender]);
 
     function handleGameEvent(event) {
@@ -255,8 +288,8 @@ export function Main() {
     function PopulateQuoteCard() {
         return (
             <div id="fetchQuote" className="card quote-card">
-                <p className="quote">here is my quote</p>
-                <p className="person">Here is the author</p>
+                <p className="quote">{quote}</p>
+                <p className="person">{quoteAuthor}</p>
             </div>
         );
     }
@@ -295,6 +328,74 @@ export function Main() {
         return(friends);
     }
 
+    // function AddFriend() {
+    //     var userObject = dictionary.get(username);
+
+    //     var friendsList = [];
+    //     dictionary.forEach(function(value, key) {
+    //         if (!userObject.friends.includes(key) && key !== username) {
+    //             friendsList.push(key);
+    //         }
+    //     });
+    //     console.log(friendsList);
+
+    //     const handleChange = (event) => {
+    //         console.log(event);
+    //       };
+        
+    //     return(
+            
+    //         <div className="card" id="addFriendCard">
+    //             <select onChange={handleChange}>
+    //                 {/* Mapping through the options array to generate <option> elements */}
+    //                 {friendsList.map((option, index) => (
+    //                 <option key={index} value={option}>
+    //                 {option}
+    //             </option>
+    //             ))}
+    //             </select>
+    //         </div>
+    //     );
+    // }
+
+    function AddFriend() {
+        const userObject = dictionary.get(username);
+        const [selectedFriend, setSelectedFriend] = useState('');
+    
+        const friendsList = [];
+        dictionary.forEach(function(value, key) {
+            if (!userObject.friends.includes(key) && key !== username) {
+                friendsList.push(key);
+            }
+        });
+    
+        const handleChange = (event) => {
+            setSelectedFriend(event.target.value);
+        };
+    
+        const handleAddFriend = () => {
+            // Do something with the selected friend
+            console.log('Selected friend:', selectedFriend);
+            userObject.friends.push(selectedFriend);
+            updateUser(userObject);
+            // You can perform further actions here, such as adding the selected friend to the user's friend list
+        };
+    
+        return (
+            <div className="card" id="addFriendCard">
+                <select onChange={handleChange} value={selectedFriend}>
+                    {/* Mapping through the friendsList array to generate <option> elements */}
+                    {friendsList.map((option, index) => (
+                        <option key={index} value={option}>
+                            {option}
+                        </option>
+                    ))}
+                </select>
+                <button onClick={handleAddFriend}>Add Friend</button>
+            </div>
+        );
+    }
+
     return (
     <div className="mainBody">
         <label className="hamburger-menu">
@@ -307,7 +408,6 @@ export function Main() {
         </aside>
 
         <div className="container">
-            {/* <PersonalCard /> */}
             {dictionary === null ? (
                 <p>Loading...</p> // Render loading message
                 ) : (
@@ -316,19 +416,17 @@ export function Main() {
             
             <PopulateQuoteCard />
             
-            {/* <PopulateFriend /> */}
             {dictionary === null ? (
                 <p>Loading...</p> // Render loading message
                 ) : (
                 <PopulateFriend />
-            )}  
+            )}
             
-            <div className="card addfriend">
-                <button className="btn" onClick={() => addFriend()}><i className='bx bx-plus-circle'></i></button>
-                <p>Add Friend</p>
-            </div>
-            <div className="card" id="addFriendCard">
-            </div>
+            {dictionary === null ? (
+                <p>Loading...</p> // Render loading message
+                ) : (
+                <AddFriend />
+            )}
         </div>
     </div>
   );
