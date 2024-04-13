@@ -360,9 +360,9 @@ export function Main() {
 
     function AddFriend() {
         const userObject = dictionary.get(username);
-        const [selectedFriend, setSelectedFriend] = useState('');
+        const [selectedFriend, setSelectedFriend] = useState('default');
     
-        const friendsList = [];
+        const friendsList = ["default"];
         dictionary.forEach(function(value, key) {
             if (!userObject.friends.includes(key) && key !== username) {
                 friendsList.push(key);
@@ -375,9 +375,11 @@ export function Main() {
     
         const handleAddFriend = () => {
             // Do something with the selected friend
-            console.log('Selected friend:', selectedFriend);
-            userObject.friends.push(selectedFriend);
-            updateUser(userObject);
+            if (selectedFriend !== "default") {
+                console.log('Selected friend:', selectedFriend);
+                userObject.friends.push(selectedFriend);
+                updateUser(userObject);
+            }    
             // You can perform further actions here, such as adding the selected friend to the user's friend list
         };
     
